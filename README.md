@@ -4,7 +4,7 @@
 [![npm-version](https://badgen.net/npm/v/homebridge-shelly-ds9)](https://www.npmjs.com/package/homebridge-shelly-ds9)
 
 [Homebridge](https://homebridge.io) plugin for [Shelly](https://shelly.cloud),
-enabling HomeKit support for the next generation of Shelly devices.This Package is only to pimp up the existing package [https://badgen.net/npm/v/shellies-ng](https://badgen.net/npm/v/homebridge-shelly-ng). Because I'm lost if my Minis don't run in the Homebridge. If Alex creates a new version of his package that supports the Mini devices, I will delete this package again. thx@sw-koenig...
+enabling HomeKit support for the next generation of Shelly devices.This Package is only to pimp up the existing package [https://badgen.net/npm/v/shellies-ds9](https://badgen.net/npm/v/homebridge-shelly-ng). Because I'm lost if my Minis don't run in the Homebridge. If Alex creates a new version of his package that supports the Mini devices, I will delete this package again. thx@sw-koenig...
 
 For the first generation, see [homebridge-shelly](https://github.com/alexryd/homebridge-shelly).
 
@@ -35,7 +35,7 @@ or manually by following these instructions:
   ```
   "platforms": [
     {
-      "platform": "ShellyNG",
+      "platform": "ShellyDS9",
       "name": "Shelly NG"
     }
   ]

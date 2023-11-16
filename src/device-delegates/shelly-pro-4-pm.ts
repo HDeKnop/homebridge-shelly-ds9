@@ -1,4 +1,4 @@
-import { ShellyPro4Pm } from 'shellies-ng';
+import { ShellyPro4Pm } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base';
 
