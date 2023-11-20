@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 import { Device, DeviceId, WebSocketRpcHandler } from 'shellies-ds9';
 
-const FILENAME = '.shelly-ds9.json';
+const FILENAME = '.shelly-ng.json';
 
 const SAVE_DELAY = 1000;
 
@@ -67,7 +67,7 @@ export class DeviceCache {
       await fs.access(this.path);
     } catch (_) {
       // the file doesn't exist
-      this.log.debug('Device cache file not found');
+      this.log.debug('Device cache file '+this.path+' not found');
       return;
     }
 
