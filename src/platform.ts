@@ -26,12 +26,12 @@ type AccessoryUuid = string;
 /**
  * The name of this plugin.
  */
-export const PLUGIN_NAME = 'homebridge-shelly-ng';
+export const PLUGIN_NAME = 'homebridge-shelly-ds9';
 
 /**
  * The name of this homebridge platform.
  */
-export const PLATFORM_NAME = 'ShellyNG';
+export const PLATFORM_NAME = 'ShellyDS9';
 
 /**
  * Utility class that "discovers" devices from the configuration options.
@@ -131,7 +131,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   readonly customServices: CustomServices;
 
   /**
-   * A reference to the shellies-ng library.
+   * A reference to the shellies-ds9 library.
    */
   protected readonly shellies: Shellies;
 
@@ -168,9 +168,9 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
     this.customCharacteristics = Object.freeze(createCharacteristics(api));
     this.customServices = Object.freeze(createServices(api, this.customCharacteristics));
 
-    // setup shellies-ng
+    // setup shellies-ds9
     this.shellies = new Shellies({
-      websocket: { ...this.options.websocket, clientId: 'homebridge-shelly-ng-' + Math.round(Math.random() * 1000000) },
+      websocket: { ...this.options.websocket, clientId: 'homebridge-shelly-ds9-' + Math.round(Math.random() * 1000000) },
       autoLoadStatus: true,
       autoLoadConfig: true,
       deviceOptions: this.options.deviceOptions,
@@ -335,7 +335,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   }
 
   /**
-   * Handles 'add' events from the shellies-ng library.
+   * Handles 'add' events from the shellies-ds9 library.
    */
   protected async handleAddedDevice(device: Device) {
     // make sure this device hasn't already been added
@@ -372,7 +372,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   }
 
   /**
-   * Handles 'remove' events from the shellies-ng library.
+   * Handles 'remove' events from the shellies-ds9 library.
    */
   protected handleRemovedDevice(device: Device) {
     // destroy and remove the device delegate
@@ -384,7 +384,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   }
 
   /**
-   * Handles 'exclude' events from the shellies-ng library.
+   * Handles 'exclude' events from the shellies-ds9 library.
    */
   protected handleExcludedDevice(deviceId: DeviceId) {
     this.log.info(`[${deviceId}] Device excluded`);
@@ -420,14 +420,14 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   }
 
   /**
-   * Handles 'unknown' events from the shellies-ng library.
+   * Handles 'unknown' events from the shellies-ds9 library.
    */
   protected handleUnknownDevice(deviceId: DeviceId, model: string) {
     this.log.info(`[${deviceId}] Unknown device of model "${model}" discovered.`);
   }
 
   /**
-   * Handles 'error' events from the shellies-ng library.
+   * Handles 'error' events from the shellies-ds9 library.
    */
   protected handleError(deviceId: DeviceId, error: Error) {
     // print the error to the log
