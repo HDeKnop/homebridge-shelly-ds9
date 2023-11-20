@@ -1,6 +1,7 @@
 import {
   ShellyPlus1,
   ShellyPlus1Ul,
+  ShellyPlus1Mini,
 } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base';
@@ -20,4 +21,5 @@ DeviceDelegate.registerDelegate(
   ShellyPlus1Delegate,
   ShellyPlus1,
   ShellyPlus1Ul,
+  ShellyPlus1Mini,
 );
