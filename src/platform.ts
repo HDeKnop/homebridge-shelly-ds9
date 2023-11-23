@@ -423,7 +423,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
    * Handles 'unknown' events from the shellies-ds9 library.
    */
   protected handleUnknownDevice(deviceId: DeviceId, model: string) {
-    this.log.info(`[${deviceId}] Unknown device of model "${model}" discovered.`);
+    this.log.warn(`[${deviceId}] Unknown device of model "${model}" discovered.`);
   }
 
   /**

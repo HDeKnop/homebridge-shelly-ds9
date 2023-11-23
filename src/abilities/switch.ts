@@ -12,6 +12,7 @@ export class SwitchAbility extends Ability {
       `Switch ${component.id + 1}`,
       `switch-${component.id}`,
     );
+
   }
 
   protected get serviceClass(): ServiceClass {
@@ -46,6 +47,7 @@ export class SwitchAbility extends Ability {
     }
 
     try {
+      this.log.info('Set Status to '+value+ '.');
       await this.component.set(value as boolean);
     } catch (e) {
       this.log.error(
