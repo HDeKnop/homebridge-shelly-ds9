@@ -47,7 +47,7 @@ export class SwitchAbility extends Ability {
     }
 
     try {
-      this.log.info('Set Status to '+value+ '.');
+      this.log.info('Status: '+value+ '(via HomeKit).');
       await this.component.set(value as boolean);
     } catch (e) {
       this.log.error(
@@ -62,6 +62,7 @@ export class SwitchAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
+    this.log.info('Status: '+value+ '(via Shelly).');
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(value as boolean);
   }
