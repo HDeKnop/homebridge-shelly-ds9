@@ -54,7 +54,6 @@ export class OutletAbility extends Ability {
     }
 
     try {
-      this.log.info('Set Status to '+value+ '.');
       await this.component.set(value as boolean);
     } catch (e) {
       this.log.error(
@@ -69,7 +68,7 @@ export class OutletAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
-    this.log.info('Status: '+value+ '(via Shelly).');
+    this.log.info('Status: '+value);
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(value as boolean);
   }
