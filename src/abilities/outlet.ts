@@ -68,7 +68,12 @@ export class OutletAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
-    this.log.info('Status('+this.component.id+'): '+value);
+    if(value){
+      this.log.info('Switch Status('+this.component.id+'): on');
+    }else{
+      this.log.info('Switch Status('+this.component.id+'): off');
+    }
+    
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(value as boolean);
   }
