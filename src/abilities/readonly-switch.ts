@@ -44,7 +44,11 @@ export class ReadonlySwitchAbility extends Ability {
    */
   protected stateChangeHandler(value: ShelliesCharacteristicValue) {
     const v: boolean = value === null ? false : value as boolean;
-
+    if(value){
+      this.log.info('Switch Status('+this.component.id+'): on');
+    }else{
+      this.log.info('Switch Status('+this.component.id+'): off');
+    }
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(v);
   }

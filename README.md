@@ -17,6 +17,7 @@ For the first generation, see [homebridge-shelly](https://github.com/alexryd/hom
 * [Shelly Plus 1 PM](https://shelly.cloud/shelly-plus-1pm/)
 * [Shelly Plus 1 Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlus1)
 * [Shelly Plus 1 PM Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlus1PM)
+* [Shelly Plus PM Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlusPMMini)
 * [Shelly Plus 2 PM](https://shelly.cloud/shelly-plus-2pm/)
 * [Shelly Plus I4](https://shelly.cloud/shelly-plus-i4/)
 * [Shelly Plus Plug US](https://shelly.cloud/shelly-plus-plug-us/)
