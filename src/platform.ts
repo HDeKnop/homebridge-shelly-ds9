@@ -66,7 +66,7 @@ export class ConfigDeviceDiscoverer extends DeviceDiscoverer {
   protected emitDevice(identifiers: DeviceIdentifiers): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.handleDiscoveredDevice(identifiers);
+        super.handleDiscoveredDevice(identifiers);
         resolve();
       }, this.emitInterval);
     });
@@ -104,7 +104,7 @@ export class CacheDeviceDiscoverer extends DeviceDiscoverer {
   protected emitDevice(identifiers: DeviceIdentifiers): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.handleDiscoveredDevice(identifiers);
+        super.handleDiscoveredDevice(identifiers);
         resolve();
       }, this.emitInterval);
     });

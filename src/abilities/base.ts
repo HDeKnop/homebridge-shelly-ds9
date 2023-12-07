@@ -202,7 +202,7 @@ export abstract class Ability {
     }
 
     return this.platformAccessory.getService(this.serviceClass)
-      || this.platformAccessory.addService(this.serviceClass);
+      ;
   }
 
   /**
