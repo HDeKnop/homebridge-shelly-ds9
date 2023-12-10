@@ -29,6 +29,10 @@ export class Pm1Ability extends Ability {
 
     // setup Current Consumption
     s.setCharacteristic(cc.CurrentConsumption, cPm1.apower ?? 0);
+    // set the initial value
+    s.setCharacteristic(this.Characteristic.On, false);
+
+    cPm1.on("change:apower", this.apowerChangeHandler, this);
 
     // setup Voltage
     if (cPm1.voltage !== undefined) {
@@ -75,21 +79,16 @@ export class Pm1Ability extends Ability {
       value as number
     );
     // set status
-    //TODO dosn't work
-    /* if (typeof value === "number") {
+    if (typeof value === "number") {
       //value is definitely a number and not null
       if (value >= 1) {
-        this.log.info('Switch Status('+this.component.id+'): on');
-        this.service
-          .getCharacteristic(this.Characteristic.On)
-          .updateValue(true);
+        //this.log.info('Switch Status('+this.component.id+'): on');
+        this.service.updateCharacteristic(this.Characteristic.On, true);
       } else {
-        this.log.info('Switch Status('+this.component.id+'): off');
-        this.service
-          .getCharacteristic(this.Characteristic.On)
-          .updateValue(false);
+        // this.log.info('Switch Status('+this.component.id+'): off');
+        this.service.updateCharacteristic(this.Characteristic.On, false);
       }
-    }*/
+    }
   }
 
   /**
