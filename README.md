@@ -13,21 +13,23 @@ For the first generation, see [homebridge-shelly](https://github.com/alexryd/hom
 
 ## Supported devices
 
-* [Shelly Plus 1](https://shelly.cloud/shelly-plus-1/)
-* [Shelly Plus 1 PM](https://shelly.cloud/shelly-plus-1pm/)
-* [Shelly Plus 1 Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlus1)
-* [Shelly Plus 1 PM Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlus1PM)
-* [Shelly Plus PM Mini](https://shelly-api-docs.shelly.cloud/gen2/Devices/ShellyPlusPMMini)
-* [Shelly Plus 2 PM](https://shelly.cloud/shelly-plus-2pm/)
-* [Shelly Plus I4](https://shelly.cloud/shelly-plus-i4/)
-* [Shelly Plus Plug US](https://shelly.cloud/shelly-plus-plug-us/)
-* [Shelly Plus Plug S](https://www.shelly.com/de/products/shop/shelly-plus-plug-s-1/)
-* [Shelly Pro 1](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
-* [Shelly Pro 1 PM](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
-* [Shelly Pro 2](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
-* [Shelly Pro 2 PM](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
-* [Shelly Pro 3](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
-* [Shelly Pro 4 PM](https://shelly.cloud/shelly-pro-smart-home-automation-solution/)
+* [Shelly Plus 1](https://kb.shelly.cloud/knowledge-base/shelly-plus-1)
+* [Shelly Plus 1 PM](https://kb.shelly.cloud/knowledge-base/shelly-plus-1pm)
+* [Shelly Plus 1 Mini](https://kb.shelly.cloud/knowledge-base/shelly-plus-1-mini)
+* [Shelly Plus 1 PM Mini](https://kb.shelly.cloud/knowledge-base/shelly-plus-1pm-mini)
+* [Shelly Plus PM Mini](https://kb.shelly.cloud/knowledge-base/shelly-plus-pm-mini)
+* [Shelly Plus 2 PM](https://kb.shelly.cloud/knowledge-base/shelly-plus-2pm)
+* [Shelly Plus i4](https://kb.shelly.cloud/knowledge-base/shelly-plus-i4)
+* [Shelly Plus Plug US](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-us)
+* [Shelly Plus Plug S](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-s-1)
+* [Shelly Pro 1](https://kb.shelly.cloud/knowledge-base/shelly-pro-1)
+* [Shelly Pro 1 PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-1pm)
+* [Shelly Pro 2](https://kb.shelly.cloud/knowledge-base/shelly-pro-2)
+* [Shelly Pro 2 PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-2pm)
+* [Shelly Pro 3](https://kb.shelly.cloud/knowledge-base/shelly-pro-3-v1)
+* [Shelly Pro 4 PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-4pm)
+* [Shelly Pro Dimmer 1PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-dimmer-1pm)
+* [Shelly Pro Dimmer 2PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-dimmer-2pm)
 
 ## Installation
 
@@ -110,6 +112,7 @@ See below for descriptions of each configuration option.
 | `devices. switch:0-3.type`      | The type of accessory used to represent the switch with the specified index number. Available options are `"outlet"` and `"switch"` (default).
 | `devices. cover:0.exclude`      | Set this option to `true` to prevent this cover from being added to HomeKit. |
 | `devices. cover:0.type`         | Only available for devices in cover mode. The type of accessory used to represent the cover. Available options are `"door"`, `"window"` (default) and `"windowCovering"`.
+| `devices. light:0.exclude`      | Set this option to `true` to prevent this light from being added to HomeKit. |
 | `mdns`                          | Settings for the mDNS device discovery service. |
 | `mdns. enable`                  | Set this option to `false` to disable automatic device discovery using mDNS. |
 | `mdns. interface`               | The network interface to use when sending and receiving mDNS packets. You probably don't need to use this setting unless you know what you're doing. If not specified, all available network interfaces will be used. |
