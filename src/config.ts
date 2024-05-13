@@ -73,6 +73,13 @@ export interface CoverOptions {
   type?: 'door' | 'window' | 'windowCovering';
 }
 
+export interface LightOptions {
+  /**
+   * Whether this light should be excluded.
+   */
+  exclude?: boolean;
+}
+
 export interface DeviceOptions {
   /**
    * The name of the device.

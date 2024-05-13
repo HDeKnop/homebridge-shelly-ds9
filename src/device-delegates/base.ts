@@ -1,4 +1,4 @@
-import { ComponentLike, Cover, Device, Switch } from 'shellies-ds9';
+import { ComponentLike, Cover, Device, Switch, Light } from 'shellies-ds9';
 import { PlatformAccessory } from 'homebridge';
 
 import {
@@ -8,10 +8,11 @@ import {
   OutletAbility,
   PowerMeterAbility,
   SwitchAbility,
+  LightAbility,
 } from '../abilities';
 import { Accessory, AccessoryId } from '../accessory';
 import { DeviceLogger } from '../utils/device-logger';
-import { CoverOptions, DeviceOptions, SwitchOptions } from '../config';
+import { CoverOptions, DeviceOptions, SwitchOptions, LightOptions } from '../config';
 import { ShellyPlatform } from '../platform';
 
 /**
@@ -44,6 +45,17 @@ export interface AddCoverOptions {
    * Whether the accessory should be active.
    */
   active: boolean;
+}
+
+export interface AddLightOptions {
+  /**
+   * Whether the accessory should be active.
+   */
+  active: boolean;
+  /**
+   * Whether the device has a single light.
+   */
+  single: boolean;
 }
 
 /**
@@ -222,6 +234,27 @@ export abstract class DeviceDelegate {
       new CoverAbility(cover, 'window').setActive(!isDoor && !isWindowCovering),
       new PowerMeterAbility(cover),
     ).setActive(coverOpts.exclude !== true && o.active !== false);
+  }
+
+  /**
+   * Creates an accessory for a light component.
+   * @param light - The light component to use.
+   * @param opts - Options for the light.
+   */
+  protected addLight(light: Light, opts?: Partial<AddLightOptions>): Accessory {
+    const o = opts ?? {};
+
+    // get the config options for this light
+    const lightOpts = this.getComponentOptions<LightOptions>(light) ?? {};
+
+    const id = o.single === true ? 'light' : `light-${light.id}`;
+    const nameSuffix = o.single === true ? null : `Light ${light.id + 1}`;
+
+    return this.createAccessory(
+      id,
+      nameSuffix,
+      new LightAbility(light),
+    ).setActive(lightOpts.exclude !== true && o.active !== false);
   }
 
   /**

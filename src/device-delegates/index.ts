@@ -12,3 +12,5 @@ export * from './shelly-pro-2';
 export * from './shelly-pro-3';
 export * from './shelly-pro-2-pm';
 export * from './shelly-pro-4-pm';
+export * from './shelly-pro-dimmer-1-pm';
+export * from './shelly-pro-dimmer-2-pm';
