@@ -29,13 +29,17 @@ export class LightAbility extends Ability {
     // listen for commands from HomeKit
     this.service.getCharacteristic(this.Characteristic.On)
       .onSet(this.onSetHandler.bind(this));
+    this.service.getCharacteristic(this.Characteristic.Brightness)
+      .onSet(this.brightnessSetHandler.bind(this));
 
     // listen for updates from the device
     this.component.on('change:output', this.outputChangeHandler, this);
+    this.component.on('change:brightness', this.brightnessChangeHandler, this);
   }
 
   detach() {
     this.component.off('change:output', this.outputChangeHandler, this);
+    this.component.off('change:brightness', this.brightnessChangeHandler, this);
   }
 
   /**
@@ -61,7 +65,7 @@ export class LightAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
-    if(value){
+    if (value){
       this.log.info('Light Status('+this.component.id+'): on');
     }else{
       this.log.info('Light Status('+this.component.id+'): off');
