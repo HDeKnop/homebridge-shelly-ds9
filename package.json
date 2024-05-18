@@ -50,6 +50,6 @@
     "prettier": "^3.1.0"
   },
   "dependencies": {
-    "shellies-ds9": "^1.0.6"
+    "shellies-ds9": "^1.0.7"
   }
 }
