@@ -12,6 +12,7 @@ const names = {
 export class CoverAbility extends Ability {
   /**
    * @param component - The cover component to control.
+   * @param type
    */
   constructor(readonly component: Cover, readonly type: 'door' | 'window' | 'windowCovering' = 'window') {
     super(

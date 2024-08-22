@@ -45,6 +45,10 @@ export interface AddCoverOptions {
    * Whether the accessory should be active.
    */
   active: boolean;
+  /**
+   * Whether the device has a single cover.
+   */
+  single: boolean;
 }
 
 export interface AddLightOptions {
@@ -226,8 +230,10 @@ export abstract class DeviceDelegate {
     const isDoor = type === 'door';
     const isWindowCovering = type === 'windowcovering';
 
+    const id = o.single === true ? 'cover' : `cover-${cover.id}`;
+
     return this.createAccessory(
-      'cover',
+      id,
       'Cover',
       new CoverAbility(cover, 'door').setActive(isDoor),
       new CoverAbility(cover, 'windowCovering').setActive(isWindowCovering),
