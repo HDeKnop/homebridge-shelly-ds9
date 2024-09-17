@@ -22,6 +22,8 @@ For the first generation, see [homebridge-shelly](https://github.com/alexryd/hom
 - [Shelly Plus i4](https://kb.shelly.cloud/knowledge-base/shelly-plus-i4)
 - [Shelly Plus Plug US](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-us)
 - [Shelly Plus Plug S](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-s-1)
+- [Shelly Plus Plug UK](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-uk)
+- [Shelly Plus Plug IT](https://kb.shelly.cloud/knowledge-base/shelly-plus-plug-it)
 - [Shelly Plus 0-10V Dimmer](https://kb.shelly.cloud/knowledge-base/shelly-plus-0-10v-dimmer)
 - [Shelly Dimmer 0/1-10V PM Gen3](https://kb.shelly.cloud/knowledge-base/shelly-dimmer-0-1-10v-pm-gen3)
 - [Shelly Pro 1](https://kb.shelly.cloud/knowledge-base/shelly-pro-1)
@@ -30,7 +32,7 @@ For the first generation, see [homebridge-shelly](https://github.com/alexryd/hom
 - [Shelly Pro 2 PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-2pm)
 - [Shelly Pro 3](https://kb.shelly.cloud/knowledge-base/shelly-pro-3-v1)
 - [Shelly Pro 4 PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-4pm)
-- [Shelly Pro Dual Cover PM](https://shelly-api-docs.shelly.cloud/gen2/Devices/Gen2/ShellyProDualCoverPM)
+- [Shelly Pro Dual Cover PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-dual-cover-pm)
 - [Shelly Pro Dimmer 1PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-dimmer-1pm)
 - [Shelly Pro Dimmer 2PM](https://kb.shelly.cloud/knowledge-base/shelly-pro-dimmer-2pm)
 
