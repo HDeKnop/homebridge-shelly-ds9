@@ -12,7 +12,7 @@ const names = {
 export class CoverAbility extends Ability {
   /**
    * @param component - The cover component to control.
-   * @param type
+   * @param type - The type of cover.
    */
   constructor(readonly component: Cover, readonly type: 'door' | 'window' | 'windowCovering' = 'window') {
     super(
@@ -33,7 +33,7 @@ export class CoverAbility extends Ability {
   /**
    * The current state of the cover.
    */
-  protected get positionState(): number {
+  protected get positionState(): CharacteristicValue {
     const state = this.component.state;
 
     if (state === 'opening') {
@@ -61,7 +61,7 @@ export class CoverAbility extends Ability {
 
   protected initialize() {
     // abort if this cover hasn't been calibrated
-    if (this.component.pos_control !== true) {
+    if (!this.component.pos_control) {
       this.log.warn('Only calibrated covers are supported.');
       return;
     }
@@ -113,23 +113,53 @@ export class CoverAbility extends Ability {
    * Handles changes to the `state` property.
    */
   protected stateChangeHandler() {
+    this.log.debug(`${this.component.id} state changed to ${this.positionState}`, {
+      target: this.targetPosition,
+      current: this.currentPosition,
+    })
+    this.updateStates();
+  }
+
+  /**
+   * Updates all states.
+   * 
+   * Shelly does not send all attributes in a single notification.
+   * We apparently need to update all states when any of them change, otherwise HomeKit
+   * gets confused and thinks the cover is in a different state than it actually is.
+   */
+  protected updateStates() {
     this.service.getCharacteristic(this.Characteristic.PositionState)
       .updateValue(this.positionState);
+    this.service.getCharacteristic(this.Characteristic.TargetPosition)
+      .updateValue(this.targetPosition);
+    this.service.getCharacteristic(this.Characteristic.CurrentPosition)
+      .updateValue(this.currentPosition);
   }
 
   /**
    * Handles changes to the `current_pos` property.
    */
   protected currentPosChangeHandler() {
-    this.service.getCharacteristic(this.Characteristic.CurrentPosition)
-      .updateValue(this.currentPosition);
+    this.log.debug(`${this.component.id} position changed to ${this.currentPosition}`, {
+      target: this.targetPosition,
+      state: this.positionState,
+    })
+    this.updateStates();
+
+    // Shelly does not update the target position when it is triggered with a physical switch.
+    // If we don't change the target position, HomeKit waits for the original position forever.
+    this.service.getCharacteristic(this.Characteristic.TargetPosition).updateValue(this.currentPosition);
   }
 
   /**
    * Handles changes to the `target_pos` property.
    */
   protected targetPosChangeHandler() {
-    this.service.getCharacteristic(this.Characteristic.TargetPosition)
-      .updateValue(this.targetPosition);
+    this.log.debug(`${this.component.id} target position changed to ${this.targetPosition}`, {
+      state: this.positionState,
+      current: this.currentPosition,
+    })
+    this.updateStates();
   }
+
 }
