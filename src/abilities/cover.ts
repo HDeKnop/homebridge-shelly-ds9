@@ -1,12 +1,12 @@
-import { CharacteristicValue } from 'homebridge';
-import { Cover } from 'shellies-ds9';
+import { CharacteristicValue } from "homebridge";
+import { Cover } from "shellies-ds9";
 
-import { Ability, ServiceClass } from './base';
+import { Ability, ServiceClass } from "./base";
 
 const names = {
-  'door': 'Door',
-  'window': 'Window',
-  'windowCovering': 'Window Covering',
+  door: "Door",
+  window: "Window",
+  windowCovering: "Window Covering",
 };
 
 export class CoverAbility extends Ability {
@@ -14,17 +14,17 @@ export class CoverAbility extends Ability {
    * @param component - The cover component to control.
    * @param type - The type of cover.
    */
-  constructor(readonly component: Cover, readonly type: 'door' | 'window' | 'windowCovering' = 'window') {
-    super(
-      `${names[type]} ${component.id + 1}`,
-      `${type}-${component.id}`,
-    );
+  constructor(
+    readonly component: Cover,
+    readonly type: "door" | "window" | "windowCovering" = "window"
+  ) {
+    super(`${names[type]} ${component.id + 1}`, `${type}-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
-    if (this.type === 'door') {
+    if (this.type === "door") {
       return this.Service.Door;
-    } else if (this.type === 'windowCovering') {
+    } else if (this.type === "windowCovering") {
       return this.Service.WindowCovering;
     }
     return this.Service.Window;
@@ -36,9 +36,9 @@ export class CoverAbility extends Ability {
   protected get positionState(): CharacteristicValue {
     const state = this.component.state;
 
-    if (state === 'opening') {
+    if (state === "opening") {
       return this.Characteristic.PositionState.INCREASING;
-    } else if (state === 'closing') {
+    } else if (state === "closing") {
       return this.Characteristic.PositionState.DECREASING;
     }
 
@@ -62,32 +62,39 @@ export class CoverAbility extends Ability {
   protected initialize() {
     // abort if this cover hasn't been calibrated
     if (!this.component.pos_control) {
-      this.log.warn('Only calibrated covers are supported.');
+      this.log.warn("Only calibrated covers are supported.");
       return;
     }
 
     // set the initial values
     this.service
       .setCharacteristic(this.Characteristic.PositionState, this.positionState)
-      .setCharacteristic(this.Characteristic.CurrentPosition, this.currentPosition)
-      .setCharacteristic(this.Characteristic.TargetPosition, this.targetPosition);
+      .setCharacteristic(
+        this.Characteristic.CurrentPosition,
+        this.currentPosition
+      )
+      .setCharacteristic(
+        this.Characteristic.TargetPosition,
+        this.targetPosition
+      );
 
     // listen for commands from HomeKit
-    this.service.getCharacteristic(this.Characteristic.TargetPosition)
+    this.service
+      .getCharacteristic(this.Characteristic.TargetPosition)
       .onSet(this.targetPositionSetHandler.bind(this));
 
     // listen for updates from the device
     this.component
-      .on('change:state', this.stateChangeHandler, this)
-      .on('change:current_pos', this.currentPosChangeHandler, this)
-      .on('change:target_pos', this.targetPosChangeHandler, this);
+      .on("change:state", this.stateChangeHandler, this)
+      .on("change:current_pos", this.currentPosChangeHandler, this)
+      .on("change:target_pos", this.targetPosChangeHandler, this);
   }
 
   detach() {
     this.component
-      .off('change:state', this.stateChangeHandler, this)
-      .off('change:current_pos', this.currentPosChangeHandler, this)
-      .off('change:target_pos', this.targetPosChangeHandler, this);
+      .off("change:state", this.stateChangeHandler, this)
+      .off("change:current_pos", this.currentPosChangeHandler, this)
+      .off("change:target_pos", this.targetPosChangeHandler, this);
   }
 
   /**
@@ -102,8 +109,8 @@ export class CoverAbility extends Ability {
       await this.component.goToPosition(value as number);
     } catch (e) {
       this.log.error(
-        'Failed to set target position:',
-        e instanceof Error ? e.message : e,
+        "Failed to set target position:",
+        e instanceof Error ? e.message : e
       );
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
@@ -113,26 +120,32 @@ export class CoverAbility extends Ability {
    * Handles changes to the `state` property.
    */
   protected stateChangeHandler() {
-    this.log.debug(`${this.component.id} state changed to ${this.positionState}`, {
-      target: this.targetPosition,
-      current: this.currentPosition,
-    })
+    this.log.debug(
+      `${this.component.id} state changed to ${this.positionState}`,
+      {
+        target: this.targetPosition,
+        current: this.currentPosition,
+      }
+    );
     this.updateStates();
   }
 
   /**
    * Updates all states.
-   * 
+   *
    * Shelly does not send all attributes in a single notification.
    * We apparently need to update all states when any of them change, otherwise HomeKit
    * gets confused and thinks the cover is in a different state than it actually is.
    */
   protected updateStates() {
-    this.service.getCharacteristic(this.Characteristic.PositionState)
+    this.service
+      .getCharacteristic(this.Characteristic.PositionState)
       .updateValue(this.positionState);
-    this.service.getCharacteristic(this.Characteristic.TargetPosition)
+    this.service
+      .getCharacteristic(this.Characteristic.TargetPosition)
       .updateValue(this.targetPosition);
-    this.service.getCharacteristic(this.Characteristic.CurrentPosition)
+    this.service
+      .getCharacteristic(this.Characteristic.CurrentPosition)
       .updateValue(this.currentPosition);
   }
 
@@ -140,26 +153,33 @@ export class CoverAbility extends Ability {
    * Handles changes to the `current_pos` property.
    */
   protected currentPosChangeHandler() {
-    this.log.debug(`${this.component.id} position changed to ${this.currentPosition}`, {
-      target: this.targetPosition,
-      state: this.positionState,
-    })
+    this.log.debug(
+      `${this.component.id} position changed to ${this.currentPosition}`,
+      {
+        target: this.targetPosition,
+        state: this.positionState,
+      }
+    );
     this.updateStates();
 
     // Shelly does not update the target position when it is triggered with a physical switch.
     // If we don't change the target position, HomeKit waits for the original position forever.
-    this.service.getCharacteristic(this.Characteristic.TargetPosition).updateValue(this.currentPosition);
+    this.service
+      .getCharacteristic(this.Characteristic.TargetPosition)
+      .updateValue(this.currentPosition);
   }
 
   /**
    * Handles changes to the `target_pos` property.
    */
   protected targetPosChangeHandler() {
-    this.log.debug(`${this.component.id} target position changed to ${this.targetPosition}`, {
-      state: this.positionState,
-      current: this.currentPosition,
-    })
+    this.log.debug(
+      `${this.component.id} target position changed to ${this.targetPosition}`,
+      {
+        state: this.positionState,
+        current: this.currentPosition,
+      }
+    );
     this.updateStates();
   }
-
 }
