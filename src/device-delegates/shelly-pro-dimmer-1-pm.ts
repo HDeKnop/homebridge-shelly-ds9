@@ -1,6 +1,10 @@
-import { ShellyProDimmer1Pm } from 'shellies-ds9';
+import {
+  ShellyDimmer,
+  ShellyProDimmer1Pm,
+  ShellyProDimmer1Pm2,
+} from "shellies-ds9";
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from "./base";
 
 /**
  * Handles Shelly Pro Dimmer 1PM devices.
@@ -13,4 +17,9 @@ export class ShellyProDimmer1PmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(ShellyProDimmer1PmDelegate, ShellyProDimmer1Pm);
+DeviceDelegate.registerDelegate(
+  ShellyProDimmer1PmDelegate,
+  ShellyProDimmer1Pm,
+  ShellyProDimmer1Pm2,
+  ShellyDimmer
+);
