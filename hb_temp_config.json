@@ -29,7 +29,7 @@
             "platform": "config"
         },
         {
-            "name": "Shelly DS 9 Herman",
+            "name": "Shelly DS 9 dev",
             "mdns": {
                 "enable": true
             },
