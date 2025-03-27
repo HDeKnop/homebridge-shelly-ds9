@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-shelly-ds9",
+  "name": "homebridge-shelly-ds9-dev",
   "version": "1.5.8",
   "description": "Homebridge plugin for the next generation of Shelly devices",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cubi1337/homebridge-shelly-ds9.git"
+    "url": "git+https://github.com/HDEKNOP/homebridge-shelly-ds9.git"
   },
   "keywords": [
     "homebridge",
@@ -27,12 +27,12 @@
   "author": "Alexander Rydén",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/cubi1337/homebridge-shelly-ds9/issues"
+    "url": "https://github.com/HDEKNOP/homebridge-shelly-ds9/issues"
   },
-  "homepage": "https://github.com/cubi1337/homebridge-shelly-ds9#readme",
+  "homepage": "https://github.com/HDEKNOP/homebridge-shelly-ds9#readme",
   "funding": {
     "type": "kofi",
-    "url": "https://ko-fi.com/cubi1337"
+    "url": "https://ko-fi.com/HDEKNOP"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
