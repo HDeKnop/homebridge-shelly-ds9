@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ShellyDS9dev",
+  "pluginAlias": "ShellyDS9-dev",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -9,7 +9,7 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Shelly NG"
+        "default": "Shelly DS9 dev"
       },
       "mdns": {
         "type": "object",

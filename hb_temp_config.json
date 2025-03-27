@@ -29,65 +29,15 @@
             "platform": "config"
         },
         {
-            "name": "Shelly DS 9 dev",
+            "name": "Shelly DS9 dev",
             "mdns": {
                 "enable": true
             },
-            "devices": [
-                {
-                    "id": "shellypro4pm-0cb815fb588c",
-                    "name": "Pro4 down",
-                    "exclude": false,
-                    "hostname": "192.168.1.243",
-                    "switch:0": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:1": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:2": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:3": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "cover:0": {
-                        "exclude": false,
-                        "type": "window"
-                    }
-                },
-                {
-                    "id": "shellyplus2pm-d4d4daec65f8",
-                    "name": "Badkamer",
-                    "exclude": false,
-                    "hostname": "192.168.1.183",
-                    "switch:0": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:1": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:2": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "switch:3": {
-                        "exclude": false,
-                        "type": "switch"
-                    },
-                    "cover:0": {
-                        "exclude": true
-                    }
-                }
-            ],
-            "platform": "ShellyDS9"
+            "devices": [],
+            "platform": "ShellyDS9-dev"
         }
+      
+        
     ],
     "disabledPlugins": []
 }

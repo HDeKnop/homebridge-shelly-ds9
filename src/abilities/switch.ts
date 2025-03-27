@@ -20,6 +20,10 @@ export class SwitchAbility extends Ability {
   }
 
   protected initialize() {
+    // set user friendly name
+    let friendlyName : string = this.component.config?.name ?? `Switch ${this.component.id + 1}`; // HDK
+    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
+  
     // set the initial value
     this.service.setCharacteristic(
       this.Characteristic.On,

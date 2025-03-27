@@ -66,6 +66,10 @@ export class CoverAbility extends Ability {
       return;
     }
 
+    // set user friendly name
+    let friendlyName : string = this.component.config?.name ?? `Cover ${this.component.id + 1}`; // HDK
+    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
+    
     // set the initial values
     this.service
       .setCharacteristic(this.Characteristic.PositionState, this.positionState)

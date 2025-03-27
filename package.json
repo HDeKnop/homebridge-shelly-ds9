@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
+    "watch": "tsc --watch",
     "lint": "eslint ./src --ext .ts,.js --max-warnings=0",
     "test": "jest",
     "preversion": "npm run build && npm run lint",
