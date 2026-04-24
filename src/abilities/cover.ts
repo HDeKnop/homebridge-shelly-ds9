@@ -105,7 +105,13 @@ export class CoverAbility extends Ability {
    * Handles changes to the TargetPosition characteristic.
    */
   protected async targetPositionSetHandler(value: CharacteristicValue) {
-    if (value === this.component.target_pos) {
+    // Only skip when the cover is already AT the requested position.
+    // Comparing only against target_pos drops commands when a physical switch
+    // moved the cover (current_pos changed) without updating target_pos.
+    if (
+      value === this.component.target_pos &&
+      value === this.component.current_pos
+    ) {
       return;
     }
 
