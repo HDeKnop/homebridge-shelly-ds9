@@ -78,6 +78,15 @@ export class Accessory {
     this._platformAccessory = platform.getAccessory(this.uuid) || null;
     if (this._platformAccessory !== null) {
       log.debug(`Accessory loaded from cache (ID: ${id})`);
+      // sync displayName if the friendly name has changed since the accessory was cached;
+      // skip when the new name simply appends to the cached one (avoids "<X> Cover Cover" duplication
+      // when device.name already contains the suffix)
+      const cachedName = this._platformAccessory.displayName;
+      if (cachedName !== this.name && !this.name.includes(cachedName)) {
+        log.debug(`Renaming cached accessory: '${cachedName}' -> '${this.name}'`);
+        this._platformAccessory.displayName = this.name;
+        platform.api.updatePlatformAccessories([this._platformAccessory]);
+      }
     }
 
     this.update();

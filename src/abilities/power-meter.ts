@@ -25,13 +25,17 @@ export class PowerMeterAbility extends Ability {
     return this.customServices.PowerMeter;
   }
 
+  protected getFriendlyName(): string {
+    return `PM-${this.component.config?.name ?? this.component.id + 1}`;
+  }
+
   protected initialize() {
     const s = this.service;
     const c = this.component;
     const cc = this.customCharacteristics;
 
     // set user friendly name     //HDK
-    let friendlyName : string = `PM-${this.component.config?.name ?? this.component.id +1  }`;  // todo : relevant switch name is captured in device data
+    const friendlyName = this.getFriendlyName();
     this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
   
     // setup Current Consumption

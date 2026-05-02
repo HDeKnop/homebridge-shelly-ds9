@@ -196,19 +196,33 @@ export abstract class Ability {
   }
 
   /**
+   * Returns the user-friendly service name. Subclasses with a component
+   * config override this to return component.config?.name. The default
+   * falls back to the generic serviceName passed at construction.
+   */
+  protected getFriendlyName(): string | undefined {
+    return this.serviceName;
+  }
+
+  /**
    * Returns a service for this ability.
    * If the platform accessory has a matching service, it will be returned. Otherwise, the service will be added.
    */
   protected addService(): Service | null {
     let service: Service | undefined;
     if (this.serviceName && this.serviceSubtype) {
+      const friendly = this.getFriendlyName() ?? this.serviceName;
       service =
-        this.platformAccessory.getService(this.serviceName) ||
+        this.platformAccessory.getServiceById(this.serviceClass, this.serviceSubtype) ||
         this.platformAccessory.addService(
           this.serviceClass,
-          this.serviceName,
+          friendly,
           this.serviceSubtype
         );
+      // keep displayName in sync — cached services may still hold a previous name
+      if (service) {
+        service.displayName = friendly;
+      }
     } else {
       service = this.platformAccessory.getService(this.serviceClass);
     }
@@ -226,7 +240,7 @@ export abstract class Ability {
     if (this._service !== null) {
       service = this._service;
     } else if (this.serviceName && this.serviceSubtype) {
-      service = this.platformAccessory.getService(this.serviceName);
+      service = this.platformAccessory.getServiceById(this.serviceClass, this.serviceSubtype);
     } else {
       service = this.platformAccessory.getService(this.serviceClass);
     }
