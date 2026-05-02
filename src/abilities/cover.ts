@@ -30,6 +30,10 @@ export class CoverAbility extends Ability {
     return this.Service.Window;
   }
 
+  protected getFriendlyName(): string {
+    return this.component.config?.name ?? `${names[this.type]} ${this.component.id + 1}`;
+  }
+
   /**
    * The current state of the cover.
    */
@@ -67,7 +71,7 @@ export class CoverAbility extends Ability {
     }
 
     // set user friendly name
-    let friendlyName : string = this.component.config?.name ?? `Cover ${this.component.id + 1}`; // HDK
+    const friendlyName = this.getFriendlyName(); // HDK
     this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
     
     // set the initial values

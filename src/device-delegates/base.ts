@@ -159,21 +159,30 @@ export abstract class DeviceDelegate {
    * @param abilities - The abilities to add to this accessory.
    */
   protected createAccessory(id: AccessoryId, nameSuffix: string | null, ...abilities: Ability[]): Accessory {
-    // make sure the given ID is unique
-    if (this.accessories.has(id)) {
-      throw new Error(`An accessory with ID '${id}' already exists`);
-    }
-
     let name = this.options.name || this.device.modelName;
     if (nameSuffix) {
       name += ' ' + nameSuffix;
+    }
+    return this.createAccessoryWithFullName(id, name, ...abilities);
+  }
+
+  /**
+   * Creates an accessory with the given ID, using `fullName` verbatim as the accessory name
+   * (no device-name prefix). Use this when a per-component friendly name is available and
+   * should stand alone (e.g., a Shelly channel named "Stairs" — we want HomeKit / Node-RED
+   * to show "Stairs", not "<device> Stairs").
+   */
+  protected createAccessoryWithFullName(id: AccessoryId, fullName: string, ...abilities: Ability[]): Accessory {
+    // make sure the given ID is unique
+    if (this.accessories.has(id)) {
+      throw new Error(`An accessory with ID '${id}' already exists`);
     }
 
     // create an accessory
     const accessory = new Accessory(
       id,
       this.device.id,
-      name,
+      fullName,
       this.platform,
       this.log,
       new AccessoryInformationAbility(this.device),
@@ -202,16 +211,19 @@ export abstract class DeviceDelegate {
     const isOutlet = type === 'outlet';
 
     const id = o.single === true ? 'switch' : `switch-${swtch.id}`;
-    const nameSuffix = o.single === true ? null : `Switch ${swtch.id + 1}`;
-
-    return this.createAccessory(
-      id,
-      nameSuffix,
+    const friendly = swtch.config?.name;
+    const abilities = [
       new OutletAbility(swtch).setActive(isOutlet),
       new SwitchAbility(swtch).setActive(!isOutlet),
       // use the apower property to determine whether power metering is available
       new PowerMeterAbility(swtch).setActive(swtch.apower !== undefined),
-    ).setActive(switchOpts.exclude !== true && o.active !== false);
+    ];
+
+    const accessory = friendly
+      ? this.createAccessoryWithFullName(id, friendly, ...abilities)
+      : this.createAccessory(id, o.single === true ? null : `Switch ${swtch.id + 1}`, ...abilities);
+
+    return accessory.setActive(switchOpts.exclude !== true && o.active !== false);
   }
 
   /**
@@ -254,13 +266,12 @@ export abstract class DeviceDelegate {
     const lightOpts = this.getComponentOptions<LightOptions>(light) ?? {};
 
     const id = o.single === true ? 'light' : `light-${light.id}`;
-    const nameSuffix = o.single === true ? null : `Light ${light.id + 1}`;
+    const friendly = light.config?.name;
+    const accessory = friendly
+      ? this.createAccessoryWithFullName(id, friendly, new LightAbility(light))
+      : this.createAccessory(id, o.single === true ? null : `Light ${light.id + 1}`, new LightAbility(light));
 
-    return this.createAccessory(
-      id,
-      nameSuffix,
-      new LightAbility(light),
-    ).setActive(lightOpts.exclude !== true && o.active !== false);
+    return accessory.setActive(lightOpts.exclude !== true && o.active !== false);
   }
 
   /**

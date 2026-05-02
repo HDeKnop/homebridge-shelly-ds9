@@ -18,11 +18,15 @@ export class OutletAbility extends Ability {
     return this.Service.Outlet;
   }
 
+  protected getFriendlyName(): string {
+    return this.component.config?.name ?? `Outlet ${this.component.id + 1}`;
+  }
+
   protected initialize() {
-    
+
     // set user friendly name
-    let friendlyName : string = this.component.config?.name ?? `Outlet ${this.component.id + 1}`; // HDK
-    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK    
+    const friendlyName = this.getFriendlyName(); // HDK
+    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
     
     
     // set the initial values
