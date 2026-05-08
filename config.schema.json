@@ -190,6 +190,50 @@
                   "default": "window"
                 }
               }
+            },
+            "light:0": {
+              "title": "Light 1",
+              "type": "object",
+              "properties": {
+                "exclude": {
+                  "title": "Exclude this light",
+                  "type": "boolean",
+                  "default": false
+                },
+                "type": {
+                  "title": "Accessory Type",
+                  "description": "Choose how this light should appear in HomeKit.",
+                  "type": "string",
+                  "oneOf": [
+                    { "title": "Light", "enum": [ "light" ] },
+                    { "title": "Ventilation Fan", "enum": [ "ventilator" ] },
+                    { "title": "Fan", "enum": [ "fan" ] }
+                  ],
+                  "default": "light"
+                }
+              }
+            },
+            "light:1": {
+              "title": "Light 2",
+              "type": "object",
+              "properties": {
+                "exclude": {
+                  "title": "Exclude this light",
+                  "type": "boolean",
+                  "default": false
+                },
+                "type": {
+                  "title": "Accessory Type",
+                  "description": "Choose how this light should appear in HomeKit.",
+                  "type": "string",
+                  "oneOf": [
+                    { "title": "Light", "enum": [ "light" ] },
+                    { "title": "Ventilation Fan", "enum": [ "ventilator" ] },
+                    { "title": "Fan", "enum": [ "fan" ] }
+                  ],
+                  "default": "light"
+                }
+              }
             }
           }
         }
@@ -272,6 +316,26 @@
           "items": [
             "devices[].cover:0.exclude",
             "devices[].cover:0.type"
+          ]
+        },
+        {
+          "key": "devices[].light:0",
+          "condition": {
+            "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyplusdimmer|shellyplusdimmerpm|shellyprodimmer1pm|shellyprodimmer2pm)-/i) !== null"
+          },
+          "items": [
+            "devices[].light:0.exclude",
+            "devices[].light:0.type"
+          ]
+        },
+        {
+          "key": "devices[].light:1",
+          "condition": {
+            "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyprodimmer2pm)-/i) !== null"
+          },
+          "items": [
+            "devices[].light:1.exclude",
+            "devices[].light:1.type"
           ]
         }
       ]
