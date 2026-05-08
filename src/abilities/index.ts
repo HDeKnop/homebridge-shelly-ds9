@@ -3,6 +3,7 @@ export * from './base';
 export * from './accessory-information';
 export * from './cover';
 export * from './light';
+export * from './ventilation';
 export * from './outlet';
 export * from './power-meter';
 export * from './readonly-switch';
