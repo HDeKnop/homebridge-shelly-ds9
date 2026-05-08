@@ -217,10 +217,10 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
 
     const accs: PlatformAccessory[] = [];
 
-    // add the accessories to our list
     for (const pa of accessories) {
-      // skip if this accessory has already been added
       if (this.accessories.has(pa.UUID)) {
+        // already bridged → just update
+        this.api.updatePlatformAccessories([pa]);
         continue;
       }
 
@@ -228,8 +228,10 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
       accs.push(pa);
     }
 
-    // register the accessories with homebridge
-    this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, accs);
+    // only register when really new
+    if (accs.length > 0) {
+      this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, accs);
+    }
   }
 
   /**
