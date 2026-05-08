@@ -78,6 +78,10 @@ export interface LightOptions {
    * Whether this light should be excluded.
    */
   exclude?: boolean;
+  /**
+   * The type of accessory used to represent the light.
+   */
+  type?: 'light' | 'fan' | 'ventilator';
 }
 
 export interface DeviceOptions {
@@ -121,6 +125,22 @@ export interface DeviceOptions {
    * Options for devices that have a cover.
    */
   [ 'cover:0' ]?: CoverOptions;
+  /**
+   * Options for devices that have one or more lights.
+   */
+  [ 'light:0' ]?: LightOptions;
+  /**
+   * Options for devices that have multiple lights.
+   */
+  [ 'light:1' ]?: LightOptions;
+  /**
+   * Options for devices that have multiple lights.
+   */
+  [ 'light:2' ]?: LightOptions;
+  /**
+   * Options for devices that have multiple lights.
+   */
+  [ 'light:3' ]?: LightOptions;
 }
 
 const DEFAULT_DEVICE_OPTIONS: Readonly<DeviceOptions> = {

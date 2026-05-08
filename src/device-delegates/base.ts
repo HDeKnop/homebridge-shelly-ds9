@@ -9,6 +9,7 @@ import {
   PowerMeterAbility,
   SwitchAbility,
   LightAbility,
+  VentilationAbility,
 } from '../abilities';
 import { Accessory, AccessoryId } from '../accessory';
 import { DeviceLogger } from '../utils/device-logger';
@@ -265,11 +266,19 @@ export abstract class DeviceDelegate {
     // get the config options for this light
     const lightOpts = this.getComponentOptions<LightOptions>(light) ?? {};
 
+    const type = typeof lightOpts.type === 'string' ? lightOpts.type.toLowerCase() : 'light';
+    const isVentilation = type === 'fan' || type === 'ventilator';
+
     const id = o.single === true ? 'light' : `light-${light.id}`;
+    const ability = isVentilation ? new VentilationAbility(light) : new LightAbility(light);
     const friendly = light.config?.name;
     const accessory = friendly
-      ? this.createAccessoryWithFullName(id, friendly, new LightAbility(light))
-      : this.createAccessory(id, o.single === true ? null : `Light ${light.id + 1}`, new LightAbility(light));
+      ? this.createAccessoryWithFullName(id, friendly, ability)
+      : this.createAccessory(
+        id,
+        o.single === true ? null : `${isVentilation ? 'Ventilation' : 'Light'} ${light.id + 1}`,
+        ability,
+      );
 
     return accessory.setActive(lightOpts.exclude !== true && o.active !== false);
   }
