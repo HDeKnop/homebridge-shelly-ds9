@@ -8,7 +8,9 @@
     "watch": "tsc --watch",
     "lint": "eslint ./src --ext .ts,.js --max-warnings=0",
     "test": "jest",
-    "preversion": "npm run build && npm run lint",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "preversion": "npm run build && npm run lint && npm run test:coverage",
     "postversion": "git push && git push --tags",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
