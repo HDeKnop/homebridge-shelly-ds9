@@ -16,6 +16,11 @@ export class CoverAbility extends Ability {
   private _isInitialized = false;
 
   /**
+   * The position value currently being sent to the device, to deduplicate rapid HAP callbacks.
+   */
+  private _pendingPosition: number | null = null;
+
+  /**
    * @param component - The cover component to control.
    * @param type - The type of cover.
    */
@@ -130,6 +135,9 @@ export class CoverAbility extends Ability {
    * Refreshes the state of the cover after device reconnection.
    */
   refreshState() {
+    if (!this._isInitialized) {
+      return;
+    }
     this.log.debug(`Refreshing cover ${this.component.id} state after reconnection`);
     this.updateStates();
   }
@@ -148,12 +156,18 @@ export class CoverAbility extends Ability {
       return;
     }
 
+    // Deduplicate: drop if the same position is already being sent
+    if (this._pendingPosition === (value as number)) {
+      return;
+    }
+
     // check if the device is connected before sending commands
     if (!this.component.device.rpcHandler.connected) {
       this.log.error('Cannot set target position: device is not connected');
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
 
+    this._pendingPosition = value as number;
     try {
       await this.component.goToPosition(value as number);
     } catch (e) {
@@ -162,6 +176,8 @@ export class CoverAbility extends Ability {
         e instanceof Error ? e.message : e,
       );
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
+    } finally {
+      this._pendingPosition = null;
     }
   }
 
