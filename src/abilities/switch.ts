@@ -20,7 +20,7 @@ export class SwitchAbility extends Ability {
   }
 
   protected getFriendlyName(): string {
-    return this.component.config?.name ?? `Switch ${this.component.id + 1}`;
+    return this.sanitizeName(this.component.config?.name ?? `Switch ${this.component.id + 1}`);
   }
 
   protected initialize() {

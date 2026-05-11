@@ -196,6 +196,18 @@ export abstract class Ability {
   }
 
   /**
+   * Strips characters that HAP rejects in Name characteristics.
+   * Allowed: alphanumeric, space, apostrophe. Must start and end with alphanumeric.
+   */
+  protected sanitizeName(name: string): string {
+    return name
+      .replace(/[^a-zA-Z0-9 ']/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '')
+      .trim();
+  }
+
+  /**
    * Returns the user-friendly service name. Subclasses with a component
    * config override this to return component.config?.name. The default
    * falls back to the generic serviceName passed at construction.

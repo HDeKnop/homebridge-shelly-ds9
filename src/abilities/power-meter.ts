@@ -26,7 +26,8 @@ export class PowerMeterAbility extends Ability {
   }
 
   protected getFriendlyName(): string {
-    return `PM-${this.component.config?.name ?? this.component.id + 1}`;
+    const label = this.component.config?.name ?? String(this.component.id + 1);
+    return `PM ${this.sanitizeName(label)}`;
   }
 
   protected initialize() {

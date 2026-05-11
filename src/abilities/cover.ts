@@ -36,7 +36,7 @@ export class CoverAbility extends Ability {
   }
 
   protected getFriendlyName(): string {
-    return this.component.config?.name ?? `${names[this.type]} ${this.component.id + 1}`;
+    return this.sanitizeName(this.component.config?.name ?? `${names[this.type]} ${this.component.id + 1}`);
   }
 
   /**
