@@ -258,8 +258,11 @@ export class CoverAbility extends Ability {
 
     // Shelly does not update the target position when it is triggered with a physical switch.
     // If we don't change the target position, HomeKit waits for the original position forever.
-    // Only update the target when the cover has stopped and target doesn't match current position.
-    if (this.positionState === this.Characteristic.PositionState.STOPPED &&
+    // Reconcile target when: (a) cover has stopped, or (b) current_pos reached a hard limit
+    // (0 or 100) — Shelly sometimes skips the STOPPED notification at end-of-travel when
+    // interrupted by rapid competing commands.
+    const atLimit = this.currentPosition === 0 || this.currentPosition === 100;
+    if ((this.positionState === this.Characteristic.PositionState.STOPPED || atLimit) &&
         this.targetPosition !== this.currentPosition) {
       this.service
         .getCharacteristic(this.Characteristic.TargetPosition)
