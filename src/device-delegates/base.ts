@@ -174,6 +174,14 @@ export abstract class DeviceDelegate {
    * to show "Stairs", not "<device> Stairs").
    */
   protected createAccessoryWithFullName(id: AccessoryId, fullName: string, ...abilities: Ability[]): Accessory {
+    // HAP only allows alphanumeric, space, and apostrophe; strip everything else
+    // then trim any leading/trailing non-alphanumeric characters
+    fullName = fullName
+      .replace(/[^a-zA-Z0-9 ']/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '')
+      .trim();
+
     // make sure the given ID is unique
     if (this.accessories.has(id)) {
       throw new Error(`An accessory with ID '${id}' already exists`);
