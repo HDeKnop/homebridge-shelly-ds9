@@ -44,6 +44,13 @@ export class LightAbility extends Ability {
     this.component.off('change:brightness', this.brightnessChangeHandler, this);
   }
 
+  refreshState() {
+    this.service.getCharacteristic(this.Characteristic.On)
+      .updateValue(this.component.output);
+    this.service.getCharacteristic(this.Characteristic.Brightness)
+      .updateValue(this.component.brightness);
+  }
+
   /**
    * Handles changes to the Light.On characteristic.
    */
