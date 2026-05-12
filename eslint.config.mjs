@@ -6,7 +6,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
 
   {
-    files: ['src/**/*.{ts,js}'],
+    files: ['src/**/*.{ts,js}', 'test/**/*.ts'],
     rules: {
       'quotes': ['warn', 'single'],
       'indent': ['warn', 2, { SwitchCase: 1 }],
@@ -27,6 +27,14 @@ export default tseslint.config(
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    },
+  },
+  {
+    files: ['test/**/*.ts'],
+    rules: {
+      'max-len': 'off',
+      'prefer-arrow-callback': 'off',
     },
   },
 );
