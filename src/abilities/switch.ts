@@ -35,7 +35,8 @@ export class SwitchAbility extends Ability {
 
     // listen for commands from HomeKit
     this.service.getCharacteristic(this.Characteristic.On)
-      .onSet(this.onSetHandler.bind(this));
+      .onSet(this.onSetHandler.bind(this))
+      .onGet(this.onGetHandler.bind(this));
 
     // listen for updates from the device
     this.component.on('change:output', this.outputChangeHandler, this);
@@ -43,6 +44,18 @@ export class SwitchAbility extends Ability {
 
   detach() {
     this.component.off('change:output', this.outputChangeHandler, this);
+  }
+
+  refreshState() {
+    this.service.getCharacteristic(this.Characteristic.On)
+      .updateValue(this.component.output);
+  }
+
+  /**
+   * Handles requests for the current value of the Switch.On characteristic.
+   */
+  protected onGetHandler(): CharacteristicValue {
+    return this.component.output;
   }
 
   /**

@@ -41,7 +41,8 @@ export class OutletAbility extends Ability {
 
     // listen for commands from HomeKit
     this.service.getCharacteristic(this.Characteristic.On)
-      .onSet(this.onSetHandler.bind(this));
+      .onSet(this.onSetHandler.bind(this))
+      .onGet(this.onGetHandler.bind(this));
 
     // listen for updates from the device
     this.component
@@ -53,6 +54,20 @@ export class OutletAbility extends Ability {
     this.component
       .off('change:output', this.outputChangeHandler, this)
       .off('change:apower', this.apowerChangeHandler, this);
+  }
+
+  refreshState() {
+    this.service.getCharacteristic(this.Characteristic.On)
+      .updateValue(this.component.output);
+    this.service.getCharacteristic(this.Characteristic.OutletInUse)
+      .updateValue(this.component.apower !== undefined && this.component.apower !== 0);
+  }
+
+  /**
+   * Handles requests for the current value of the Outlet.On characteristic.
+   */
+  protected onGetHandler(): CharacteristicValue {
+    return this.component.output;
   }
 
   /**

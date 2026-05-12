@@ -73,7 +73,22 @@ export class DeviceCache {
 
     // read the file
     const data: string = await fs.readFile(this.path, { encoding: 'utf8' });
-    const s = JSON.parse(data) as DeviceStorage;
+
+    let s: DeviceStorage;
+    try {
+      s = JSON.parse(data) as DeviceStorage;
+    } catch (e) {
+      this.log.error(
+        'Device cache file is corrupted and will be ignored:',
+        e instanceof Error ? e.message : e,
+      );
+      return;
+    }
+
+    if (!Array.isArray(s?.devices)) {
+      this.log.error('Device cache file has an unexpected format and will be ignored');
+      return;
+    }
 
     this.log.debug(`Loaded ${s.devices.length} device(s) from cache`);
 
