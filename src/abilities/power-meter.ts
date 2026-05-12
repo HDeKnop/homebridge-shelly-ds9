@@ -26,7 +26,7 @@ export class PowerMeterAbility extends Ability {
   }
 
   protected getFriendlyName(): string {
-    const label = this.component.config?.name ?? String(this.component.id + 1);
+    const label = this.component.config?.name ?? this.platformAccessory.displayName;
     return `PM ${this.sanitizeName(label)}`;
   }
 
@@ -38,7 +38,7 @@ export class PowerMeterAbility extends Ability {
     // set user friendly name     //HDK
     const friendlyName = this.getFriendlyName();
     this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
-  
+
     // setup Current Consumption
     s.setCharacteristic(
       cc.CurrentConsumption,

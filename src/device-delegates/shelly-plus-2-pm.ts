@@ -11,12 +11,12 @@ export class ShellyPlus2PmDelegate extends DeviceDelegate {
     const isCover = d.profile === 'cover';
 
     if(isCover){
-      this.addCover(d.cover0, { active: isCover })
+      this.addCover(d.cover0, { active: isCover });
     } else {
       this.addSwitch(d.switch0, { active: !isCover });
       this.addSwitch(d.switch1, { active: !isCover });
+    }
   }
-}
 }
 
 DeviceDelegate.registerDelegate(

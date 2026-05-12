@@ -213,7 +213,7 @@ export abstract class Ability {
    * falls back to the generic serviceName passed at construction.
    */
   protected getFriendlyName(): string | undefined {
-    return this.serviceName;
+    return this.platformAccessory.displayName;
   }
 
   /**
