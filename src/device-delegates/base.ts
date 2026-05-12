@@ -10,11 +10,11 @@ import {
   SwitchAbility,
   LightAbility,
   VentilationAbility,
-} from '../abilities';
-import { Accessory, AccessoryId } from '../accessory';
-import { DeviceLogger } from '../utils/device-logger';
-import { CoverOptions, DeviceOptions, SwitchOptions, LightOptions } from '../config';
-import { ShellyPlatform } from '../platform';
+} from '../abilities/index.js';
+import { Accessory, AccessoryId } from '../accessory.js';
+import { DeviceLogger } from '../utils/device-logger.js';
+import { CoverOptions, DeviceOptions, SwitchOptions, LightOptions } from '../config.js';
+import { ShellyPlatform } from '../platform.js';
 
 /**
  * Describes a device delegate class.

@@ -6,10 +6,10 @@ import {
   WithUUID,
 } from 'homebridge';
 
-import { CustomCharacteristics } from '../utils/characteristics';
-import { CustomServices } from '../utils/services';
-import { DeviceLogger } from '../utils/device-logger';
-import { ShellyPlatform } from '../platform';
+import { CustomCharacteristics } from '../utils/characteristics.js';
+import { CustomServices } from '../utils/services.js';
+import { DeviceLogger } from '../utils/device-logger.js';
+import { ShellyPlatform } from '../platform.js';
 
 export type ServiceClass = WithUUID<typeof Service>;
 

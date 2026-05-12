@@ -1,6 +1,6 @@
 import { API, Service, WithUUID } from 'homebridge';
 
-import { CustomCharacteristics } from './characteristics';
+import { CustomCharacteristics } from './characteristics.js';
 
 type S = WithUUID<typeof Service>;
 

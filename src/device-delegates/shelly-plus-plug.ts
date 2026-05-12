@@ -5,7 +5,7 @@ import {
   ShellyPlusPlugUk,
 } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 
 /**
  * Handles Shelly Plus Plug US devices.

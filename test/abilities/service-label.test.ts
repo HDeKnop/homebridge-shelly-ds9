@@ -1,4 +1,4 @@
-import { Characteristic, Service } from 'hap-nodejs';
+import { Characteristic, Service } from '@homebridge/hap-nodejs';
 
 import { ServiceLabelAbility } from '../../src/abilities';
 import { createTestPlatform } from '../mocks/platform';

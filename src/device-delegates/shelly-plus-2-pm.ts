@@ -1,6 +1,6 @@
 import { ShellyGen32Pm, ShellyPlus2Pm, ShellyPlus2PmRev1 } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 
 /**
  * Handles Shelly Plus 2 PM devices.

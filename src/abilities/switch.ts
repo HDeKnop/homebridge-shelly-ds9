@@ -1,7 +1,7 @@
 import { CharacteristicValue } from 'homebridge';
 import { CharacteristicValue as ShelliesCharacteristicValue, Switch } from 'shellies-ds9';
 
-import { Ability, ServiceClass } from './base';
+import { Ability, ServiceClass } from './base.js';
 
 export class SwitchAbility extends Ability {
   /**

@@ -4,7 +4,7 @@ import {
   ShellyPro2PmRev2,
 } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 
 /**
  * Handles Shelly Pro 2 PM devices.

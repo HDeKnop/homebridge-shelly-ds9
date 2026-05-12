@@ -1,6 +1,6 @@
 import { Input } from 'shellies-ds9';
 
-import { Ability, ServiceClass } from './base';
+import { Ability, ServiceClass } from './base.js';
 
 enum ButtonPress {
   Single = 'single',
