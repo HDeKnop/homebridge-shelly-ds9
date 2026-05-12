@@ -23,7 +23,7 @@ export class AccessoryInformationAbility extends Ability {
       .setCharacteristic(this.Characteristic.Manufacturer, 'Allterco')
       .setCharacteristic(this.Characteristic.Model, this.device.modelName)
       .setCharacteristic(this.Characteristic.SerialNumber, this.device.macAddress)
-      .setCharacteristic(this.Characteristic.FirmwareRevision, this.device.firmware.version || '1.0.0');
+      .setCharacteristic(this.Characteristic.FirmwareRevision, this.device.firmware.version || 'unknown');
   }
 
   detach() {
