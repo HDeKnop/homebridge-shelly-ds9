@@ -34,20 +34,24 @@
           "requestTimeout": {
             "title": "Request timeout",
             "type": "integer",
+            "minimum": 1,
+            "maximum": 300,
             "placeholder": "10",
-            "description": "The time, in seconds, to wait for a response before a request is aborted."
+            "description": "The time, in seconds, to wait for a response before a request is aborted. Must be between 1 and 300."
           },
           "pingInterval": {
             "title": "Ping interval",
             "type": "integer",
+            "minimum": 0,
+            "maximum": 3600,
             "placeholder": "60",
-            "description": "The interval, in seconds, at which ping requests should be made to verify that the connection is open. Set to 0 to disable."
+            "description": "The interval, in seconds, at which ping requests should be made to verify that the connection is open. Set to 0 to disable. Maximum 3600."
           },
           "reconnectInterval": {
             "title": "Reconnect intervals",
             "type": "string",
             "placeholder": "5,10,30,60,300,600",
-            "description": "The interval, in seconds, at which a connection attempt should be made after a socket has been closed. Multiple intervals can be specified as a comma-separated list of numbers. Set to 0 to disable."
+            "description": "The interval, in seconds, at which a connection attempt should be made after a socket has been closed. Multiple intervals can be specified as a comma-separated list of numbers (e.g. 5,10,30,60). Set to 0 to disable."
           }
         }
       },
