@@ -41,7 +41,7 @@ export class CoverAbility extends Ability {
   }
 
   protected getFriendlyName(): string {
-    return this.sanitizeName(this.component.config?.name ?? `${names[this.type]} ${this.component.id + 1}`);
+    return this.sanitizeName(this.component.config?.name ?? this.platformAccessory.displayName);
   }
 
   /**
@@ -83,7 +83,7 @@ export class CoverAbility extends Ability {
     // set user friendly name
     const friendlyName = this.getFriendlyName(); // HDK
     this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
-    
+
     // set the initial values
     this.service
       .setCharacteristic(this.Characteristic.PositionState, this.positionState)
