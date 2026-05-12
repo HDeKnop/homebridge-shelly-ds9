@@ -5,24 +5,9 @@ import { Ability, ServiceClass } from './base.js';
 
 /**
  * Exposes a light component as a fan/ventilation service.
+ * Uses the Fanv2 service which is always available in Homebridge 2.0+.
  */
 export class VentilationAbility extends Ability {
-  private get isFanV2(): boolean {
-    return this.Service.Fanv2 !== undefined;
-  }
-
-  private get activeCharacteristic() {
-    return this.isFanV2 ? this.Characteristic.Active : this.Characteristic.On;
-  }
-
-  private get activeOnValue(): CharacteristicValue {
-    return this.isFanV2 ? this.Characteristic.Active.ACTIVE : true;
-  }
-
-  private get activeOffValue(): CharacteristicValue {
-    return this.isFanV2 ? this.Characteristic.Active.INACTIVE : false;
-  }
-
   /**
    * @param component - The light component to control.
    */
@@ -34,17 +19,19 @@ export class VentilationAbility extends Ability {
   }
 
   protected get serviceClass(): ServiceClass {
-    return (this.Service.Fanv2 ?? this.Service.Fan) as ServiceClass;
+    return this.Service.Fanv2;
   }
 
   protected initialize() {
-    const initialActive = this.component.output ? this.activeOnValue : this.activeOffValue;
+    const initialActive = this.component.output
+      ? this.Characteristic.Active.ACTIVE
+      : this.Characteristic.Active.INACTIVE;
     const initialSpeed = typeof this.component.brightness === 'number' ? this.component.brightness : 0;
 
-    this.service.setCharacteristic(this.activeCharacteristic, initialActive);
+    this.service.setCharacteristic(this.Characteristic.Active, initialActive);
     this.service.setCharacteristic(this.Characteristic.RotationSpeed, initialSpeed);
 
-    this.service.getCharacteristic(this.activeCharacteristic)
+    this.service.getCharacteristic(this.Characteristic.Active)
       .onSet(this.onActiveSetHandler.bind(this));
 
     this.service.getCharacteristic(this.Characteristic.RotationSpeed)
@@ -55,7 +42,7 @@ export class VentilationAbility extends Ability {
     this.component.on('change:brightness', this.brightnessChangeHandler, this);
   }
 
-  detach() {
+  detach(): void {
     this.component.off('change:output', this.outputChangeHandler, this);
     this.component.off('change:brightness', this.brightnessChangeHandler, this);
   }
@@ -64,9 +51,7 @@ export class VentilationAbility extends Ability {
    * Handles changes to the fan Active characteristic.
    */
   protected async onActiveSetHandler(value: CharacteristicValue) {
-    const isActive = this.isFanV2
-      ? value === this.Characteristic.Active.ACTIVE || value === true || value === 1
-      : value === true || value === 1;
+    const isActive = value === this.Characteristic.Active.ACTIVE || value === true || value === 1;
 
     if (isActive === this.component.output) {
       return;
@@ -115,9 +100,8 @@ export class VentilationAbility extends Ability {
     const isActive = value === true || value === 1;
     this.log.info(`Ventilation Status(${this.component.id}): ${isActive ? 'on' : 'off'}`);
 
-    const characteristicValue = isActive ? this.activeOnValue : this.activeOffValue;
-    this.service.getCharacteristic(this.activeCharacteristic)
-      .updateValue(characteristicValue);
+    this.service.getCharacteristic(this.Characteristic.Active)
+      .updateValue(isActive ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE);
   }
 
   /**
@@ -131,7 +115,7 @@ export class VentilationAbility extends Ability {
       .updateValue(speed);
 
     const active = speed > 0 || this.component.output;
-    this.service.getCharacteristic(this.activeCharacteristic)
-      .updateValue(active ? this.activeOnValue : this.activeOffValue);
+    this.service.getCharacteristic(this.Characteristic.Active)
+      .updateValue(active ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE);
   }
 }
