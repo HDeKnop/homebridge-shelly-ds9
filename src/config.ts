@@ -184,7 +184,18 @@ export class PlatformOptions {
     }
 
     // store the WebSocket options (with default values)
-    this.websocket = { ...DEFAULT_WEB_SOCKET_OPTIONS, ...config.websocket };
+    const ws = { ...DEFAULT_WEB_SOCKET_OPTIONS, ...config.websocket };
+
+    // clamp numeric fields to safe ranges so invalid config can't destabilise the WS layer
+    ws.requestTimeout = Math.max(1, ws.requestTimeout);
+    ws.pingInterval = Math.max(0, ws.pingInterval);
+    if (typeof ws.reconnectInterval === 'number') {
+      ws.reconnectInterval = Math.max(0, ws.reconnectInterval);
+    } else if (Array.isArray(ws.reconnectInterval)) {
+      ws.reconnectInterval = ws.reconnectInterval.map(v => Math.max(0, v));
+    }
+
+    this.websocket = ws;
 
     // store the device options
     if (Array.isArray(config.devices)) {

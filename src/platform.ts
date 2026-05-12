@@ -1,3 +1,5 @@
+import { randomBytes } from 'crypto';
+
 import {
   API,
   DynamicPlatformPlugin,
@@ -170,7 +172,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
 
     // setup shellies-ds9
     this.shellies = new Shellies({
-      websocket: { ...this.options.websocket, clientId: 'homebridge-shelly-ds9-' + Math.round(Math.random() * 1000000) },
+      websocket: { ...this.options.websocket, clientId: 'homebridge-shelly-ds9-' + randomBytes(8).toString('hex') },
       autoLoadStatus: true,
       autoLoadConfig: true,
       deviceOptions: this.options.deviceOptions,
