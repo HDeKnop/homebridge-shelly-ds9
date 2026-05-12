@@ -65,7 +65,7 @@ export class FakeService {
   getCharacteristic(cls: CharacteristicClass): FakeCharacteristic {
     let c = this.characteristics.get(cls.UUID);
     if (!c) {
-      c = new FakeCharacteristic(cls.UUID, (cls as { name?: string }).name ?? 'Unknown');
+      c = new FakeCharacteristic(cls.UUID, (cls as { displayName?: string }).displayName ?? 'Unknown');
       this.characteristics.set(cls.UUID, c);
     }
     return c;
@@ -132,12 +132,12 @@ export class FakePlatformAccessory {
  * distinct UUIDs, not what specific values.
  */
 function makeCharacteristic(name: string, extras: Record<string, unknown> = {}): CharacteristicClass {
-  const cls = Object.assign(function FakeCharacteristicCtor() {}, { UUID: `char-${name}`, name }, extras);
+  const cls = { UUID: `char-${name}`, displayName: name, ...extras };
   return cls as unknown as CharacteristicClass;
 }
 
 function makeService(name: string): ServiceClass {
-  const cls = Object.assign(function FakeServiceCtor() {}, { UUID: `service-${name}`, name });
+  const cls = { UUID: `service-${name}`, displayName: name };
   return cls as unknown as ServiceClass;
 }
 
@@ -182,6 +182,7 @@ export function createFakeApi(): FakeApi {
     On: makeCharacteristic('On'),
     OutletInUse: makeCharacteristic('OutletInUse'),
     Brightness: makeCharacteristic('Brightness'),
+    RotationSpeed: makeCharacteristic('RotationSpeed'),
     Active: makeCharacteristic('Active', Active),
     CurrentPosition: makeCharacteristic('CurrentPosition'),
     TargetPosition: makeCharacteristic('TargetPosition'),
