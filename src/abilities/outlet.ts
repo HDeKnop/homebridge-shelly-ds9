@@ -23,11 +23,7 @@ export class OutletAbility extends Ability {
   }
 
   protected initialize() {
-
-    // set user friendly name
-    const friendlyName = this.getFriendlyName(); // HDK
-    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
-
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
 
     // set the initial values
     this.service
@@ -93,12 +89,7 @@ export class OutletAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
-    if(value){
-      this.log.info('Switch Status('+this.component.id+'): on');
-    }else{
-      this.log.info('Switch Status('+this.component.id+'): off');
-    }
-
+    this.log.info(`Outlet Status(${this.component.id}): ${value ? 'on' : 'off'}`);
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(value as boolean);
   }

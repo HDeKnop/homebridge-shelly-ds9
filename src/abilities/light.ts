@@ -12,7 +12,6 @@ export class LightAbility extends Ability {
       `Light ${component.id + 1}`,
       `light-${component.id}`,
     );
-
   }
 
   protected get serviceClass(): ServiceClass {
@@ -81,11 +80,7 @@ export class LightAbility extends Ability {
    * Handles changes to the `output` property.
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
-    if (value){
-      this.log.info('Light Status('+this.component.id+'): on');
-    }else{
-      this.log.info('Light Status('+this.component.id+'): off');
-    }
+    this.log.info(`Light Status(${this.component.id}): ${value ? 'on' : 'off'}`);
     this.service.getCharacteristic(this.Characteristic.On)
       .updateValue(value as boolean);
   }
@@ -120,7 +115,7 @@ export class LightAbility extends Ability {
    * Handles changes to the `brightness` property.
    */
   protected brightnessChangeHandler(value: ShelliesCharacteristicValue) {
-    this.log.info('Light Status('+this.component.id+'): '+value);
+    this.log.info(`Light Brightness(${this.component.id}): ${value}`);
     this.service.getCharacteristic(this.Characteristic.Brightness)
       .updateValue(value as number);
   }

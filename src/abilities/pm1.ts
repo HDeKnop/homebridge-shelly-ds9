@@ -1,4 +1,3 @@
-//import { Perms } from "homebridge";
 import {
   CharacteristicValue as ShelliesCharacteristicValue,
   Pm1,
@@ -8,14 +7,16 @@ import {
 import { Ability, ServiceClass } from './base.js';
 
 /**
- * This ability sets up a custom service that reports power meter readings.
+ * Reports power meter readings for a Pm1 component.
+ * Similar to PowerMeterAbility but targets the dedicated Pm1 service type
+ * used by standalone energy-monitor devices (e.g. Shelly PM Mini Gen3).
  */
 export class Pm1Ability extends Ability {
   /**
-   * @param componentPm1 - The switch or cover component to get readings from.
+   * @param component - The Pm1 component to get readings from.
    */
-  constructor(readonly componentPm1: Pm1) {
-    super(`Pm1 ${componentPm1.id + 1}`, `Pm1-${componentPm1.id}`);
+  constructor(readonly component: Pm1) {
+    super(`Pm1 ${component.id + 1}`, `Pm1-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -24,50 +25,54 @@ export class Pm1Ability extends Ability {
 
   protected initialize() {
     const s = this.service;
-    const cPm1 = this.componentPm1;
+    const c = this.component;
     const cc = this.customCharacteristics;
 
-    // setup Current Consumption
-    s.setCharacteristic(cc.CurrentConsumption, cPm1.apower ?? 0);
-    // set the initial value
-    s.setCharacteristic(this.Characteristic.On, false);
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
 
-    cPm1.on('change:apower', this.apowerChangeHandler, this);
+    // setup Current Consumption
+    s.setCharacteristic(cc.CurrentConsumption, c.apower ?? 0);
+    // set the initial on/off indicator based on whether power is flowing
+    s.setCharacteristic(this.Characteristic.On, (c.apower ?? 0) >= 1);
+
+    c.on('change:apower', this.apowerChangeHandler, this);
 
     // setup Voltage
-    if (cPm1.voltage !== undefined) {
-      s.setCharacteristic(cc.Voltage, cPm1.voltage);
-
-      cPm1.on('change:voltage', this.voltageChangeHandler, this);
+    if (c.voltage !== undefined) {
+      s.setCharacteristic(cc.Voltage, c.voltage);
+      c.on('change:voltage', this.voltageChangeHandler, this);
     } else {
       this.removeCharacteristic(cc.Voltage);
     }
 
     // setup Electric Current
-    if (cPm1.current !== undefined) {
-      s.setCharacteristic(cc.ElectricCurrent, cPm1.current);
-
-      cPm1.on('change:current', this.currentChangeHandler, this);
+    if (c.current !== undefined) {
+      s.setCharacteristic(cc.ElectricCurrent, c.current);
+      c.on('change:current', this.currentChangeHandler, this);
     } else {
       this.removeCharacteristic(cc.ElectricCurrent);
     }
 
     // setup Total Consumption
-    if (cPm1.aenergy !== undefined) {
-      s.setCharacteristic(cc.TotalConsumption, cPm1.aenergy.total / 1000);
-
-      cPm1.on('change:aenergy', this.aenergyChangeHandler, this);
+    if (c.aenergy !== undefined) {
+      s.setCharacteristic(cc.TotalConsumption, c.aenergy.total / 1000);
+      c.on('change:aenergy', this.aenergyChangeHandler, this);
     } else {
       this.removeCharacteristic(cc.TotalConsumption);
     }
   }
 
-  detach() {
-    this.componentPm1
+  detach(): void {
+    this.component
       .off('change:apower', this.apowerChangeHandler, this)
       .off('change:voltage', this.voltageChangeHandler, this)
       .off('change:current', this.currentChangeHandler, this)
       .off('change:aenergy', this.aenergyChangeHandler, this);
+  }
+
+  protected getFriendlyName(): string {
+    const label = this.component.config?.name ?? this.platformAccessory.displayName;
+    return `PM ${this.sanitizeName(label)}`;
   }
 
   /**
@@ -78,17 +83,10 @@ export class Pm1Ability extends Ability {
       this.customCharacteristics.CurrentConsumption,
       value as number,
     );
-    // set status
-    if (typeof value === 'number') {
-      //value is definitely a number and not null
-      if (value >= 1) {
-        //this.log.info('Switch Status('+this.component.id+'): on');
-        this.service.updateCharacteristic(this.Characteristic.On, true);
-      } else {
-        // this.log.info('Switch Status('+this.component.id+'): off');
-        this.service.updateCharacteristic(this.Characteristic.On, false);
-      }
-    }
+    this.service.updateCharacteristic(
+      this.Characteristic.On,
+      typeof value === 'number' && value >= 1,
+    );
   }
 
   /**
