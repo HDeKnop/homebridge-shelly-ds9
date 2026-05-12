@@ -14,7 +14,6 @@
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "incremental": true,

@@ -141,7 +141,7 @@ export abstract class DeviceDelegate {
    * Subclasses should override this method to setup the device delegate and create their
    * accessories.
    */
-  protected abstract setup();
+  protected abstract setup(): void;
 
   /**
    * Retrieves configuration options for the given component from the device options.
@@ -149,7 +149,7 @@ export abstract class DeviceDelegate {
    * @returns A set of options, if found.
    */
   protected getComponentOptions<T>(component: ComponentLike): T | undefined {
-    return this.options?.[component.key] as T;
+    return (this.options as unknown as Record<string, unknown>)?.[component.key] as T;
   }
 
   /**
