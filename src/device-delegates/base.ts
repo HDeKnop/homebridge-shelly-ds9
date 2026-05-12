@@ -149,7 +149,7 @@ export abstract class DeviceDelegate {
    * @returns A set of options, if found.
    */
   protected getComponentOptions<T>(component: ComponentLike): T | undefined {
-    return (this.options as unknown as Record<string, unknown>)?.[component.key] as T;
+    return this.options?.[component.key] as T;
   }
 
   /**

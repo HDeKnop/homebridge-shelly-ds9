@@ -84,6 +84,12 @@ export interface LightOptions {
   type?: 'light' | 'fan' | 'ventilator';
 }
 
+/**
+ * The union of all component-level option types.
+ * Used as the value type for the component key index on DeviceOptions.
+ */
+export type ComponentOptions = SwitchOptions | CoverOptions | LightOptions;
+
 export interface DeviceOptions {
   /**
    * The name of the device.
@@ -106,40 +112,18 @@ export interface DeviceOptions {
    */
   password?: string;
   /**
-   * Options for devices that have one or more switch.
+   * Per-component options, keyed by component key (e.g. 'switch:0', 'cover:0').
+   * The index signature allows dynamic lookup in DeviceDelegate.getComponentOptions().
    */
+  [key: string]: ComponentOptions | string | boolean | undefined;
   [ 'switch:0' ]?: SwitchOptions;
-  /**
-   * Options for devices that have multiple switches.
-   */
   [ 'switch:1' ]?: SwitchOptions;
-  /**
-   * Options for devices that have multiple switches.
-   */
   [ 'switch:2' ]?: SwitchOptions;
-  /**
-   * Options for devices that have multiple switches.
-   */
   [ 'switch:3' ]?: SwitchOptions;
-  /**
-   * Options for devices that have a cover.
-   */
   [ 'cover:0' ]?: CoverOptions;
-  /**
-   * Options for devices that have one or more lights.
-   */
   [ 'light:0' ]?: LightOptions;
-  /**
-   * Options for devices that have multiple lights.
-   */
   [ 'light:1' ]?: LightOptions;
-  /**
-   * Options for devices that have multiple lights.
-   */
   [ 'light:2' ]?: LightOptions;
-  /**
-   * Options for devices that have multiple lights.
-   */
   [ 'light:3' ]?: LightOptions;
 }
 
@@ -192,7 +176,7 @@ export class PlatformOptions {
     if (typeof ws.reconnectInterval === 'number') {
       ws.reconnectInterval = Math.max(0, ws.reconnectInterval);
     } else if (Array.isArray(ws.reconnectInterval)) {
-      ws.reconnectInterval = ws.reconnectInterval.map(v => Math.max(0, v));
+      ws.reconnectInterval = ws.reconnectInterval.map((v: number) => Math.max(0, v));
     }
 
     this.websocket = ws;
