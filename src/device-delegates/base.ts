@@ -215,7 +215,7 @@ export abstract class DeviceDelegate {
     // get the config options for this switch
     const switchOpts = this.getComponentOptions<SwitchOptions>(swtch) ?? {};
 
-    // determine the switch tyoe
+    // determine the switch type
     const type = typeof switchOpts.type === 'string' ? switchOpts.type.toLowerCase() : 'switch';
     const isOutlet = type === 'outlet';
 
@@ -246,7 +246,7 @@ export abstract class DeviceDelegate {
     // get the config options for this cover
     const coverOpts = this.getComponentOptions<CoverOptions>(cover) ?? {};
 
-    // determine the cover tyoe
+    // determine the cover type
     const type = typeof coverOpts.type === 'string' ? coverOpts.type.toLowerCase() : 'window';
     const isDoor = type === 'door';
     const isWindowCovering = type === 'windowcovering';
@@ -310,21 +310,21 @@ export abstract class DeviceDelegate {
    * Handles 'disconnect' events from the RPC handler.
    */
   protected handleDisconnect(code: number, reason: string, reconnectIn: number | null) {
-    const details = reason.length > 0 ? 'reason: ' + reason : 'code: ' + code;
-    this.log.warn((this.connected ? 'Device disconnected' : 'Connection failed') + ' (' + details + ')');
+    const details = reason.length > 0 ? `reason: ${reason}` : `code: ${code}`;
+    this.log.warn(`${this.connected ? 'Device disconnected' : 'Connection failed'} (${details})`);
 
     if (reconnectIn !== null) {
-      let msg = 'Reconnecting in ';
+      let interval: string;
 
       if (reconnectIn < 60 * 1000) {
-        msg += Math.floor(reconnectIn / 1000) + ' second(s)';
+        interval = `${Math.floor(reconnectIn / 1000)} second(s)`;
       } else if (reconnectIn < 60 * 60 * 1000) {
-        msg += Math.floor(reconnectIn / (60 * 1000)) + ' minute(s)';
+        interval = `${Math.floor(reconnectIn / (60 * 1000))} minute(s)`;
       } else {
-        msg += Math.floor(reconnectIn / (60 * 60 * 1000)) + ' hour(s)';
+        interval = `${Math.floor(reconnectIn / (60 * 60 * 1000))} hour(s)`;
       }
 
-      this.log.info(msg);
+      this.log.info(`Reconnecting in ${interval}`);
     }
 
     this.connected = false;

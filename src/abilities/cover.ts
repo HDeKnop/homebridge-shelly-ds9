@@ -77,12 +77,15 @@ export class CoverAbility extends Ability {
     // abort if this cover hasn't been calibrated
     if (!this.component.pos_control) {
       this.log.warn('Only calibrated covers are supported.');
+      // reset to a neutral stopped state so HomeKit doesn't show stale values
+      this.service
+        .setCharacteristic(this.Characteristic.PositionState, this.Characteristic.PositionState.STOPPED)
+        .setCharacteristic(this.Characteristic.CurrentPosition, 0)
+        .setCharacteristic(this.Characteristic.TargetPosition, 0);
       return;
     }
 
-    // set user friendly name
-    const friendlyName = this.getFriendlyName(); // HDK
-    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
 
     // set the initial values
     this.service

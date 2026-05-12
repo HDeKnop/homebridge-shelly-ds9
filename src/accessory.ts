@@ -36,13 +36,13 @@ export class Accessory {
 
   /**
    * Whether this accessory is active.
-   * Setting an accessory to inactive will remove it from HoneKit.
+   * Setting an accessory to inactive will remove it from HomeKit.
    */
   get active(): boolean {
     return this._active;
   }
 
-  set active(value) {
+  set active(value: boolean) {
     if (value === this._active) {
       return;
     }

@@ -35,9 +35,7 @@ export class PowerMeterAbility extends Ability {
     const c = this.component;
     const cc = this.customCharacteristics;
 
-    // set user friendly name     //HDK
-    const friendlyName = this.getFriendlyName();
-    this.service.setCharacteristic(this.Characteristic.Name, friendlyName); // HDK
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
 
     // setup Current Consumption
     s.setCharacteristic(

@@ -67,6 +67,12 @@ export class StatelessProgrammableSwitchAbility extends Ability {
       case ButtonPress.Long:
         value = PSE.LONG_PRESS;
         break;
+
+      default: {
+        const _exhaustive: never = type;
+        this.log.error(`Unknown button press type: ${_exhaustive}`);
+        return;
+      }
     }
 
     // update the characteristic
