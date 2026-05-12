@@ -1,6 +1,6 @@
 import { ShellyProDimmer2Pm } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 
 /**
  * Handles Shelly Pro Dimmer 2PM devices.

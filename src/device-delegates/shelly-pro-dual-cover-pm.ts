@@ -1,6 +1,6 @@
 import { ShellyProDualCoverPm } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 
 /**
  * Handles Shelly Pro Dual Cover PM devices.

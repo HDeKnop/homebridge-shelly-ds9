@@ -15,11 +15,11 @@ import {
   Shellies,
 } from 'shellies-ds9';
 
-import { CustomCharacteristics, createCharacteristics } from './utils/characteristics';
-import { CustomServices, createServices } from './utils/services';
-import { DeviceCache } from './utils/device-cache';
-import { DeviceDelegate } from './device-delegates';
-import { PlatformOptions } from './config';
+import { CustomCharacteristics, createCharacteristics } from './utils/characteristics.js';
+import { CustomServices, createServices } from './utils/services.js';
+import { DeviceCache } from './utils/device-cache.js';
+import { DeviceDelegate } from './device-delegates/index.js';
+import { PlatformOptions } from './config.js';
 
 type AccessoryUuid = string;
 

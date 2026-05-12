@@ -1,7 +1,7 @@
 import { CharacteristicValue } from 'homebridge';
 import { Cover } from 'shellies-ds9';
 
-import { Ability, ServiceClass } from './base';
+import { Ability, ServiceClass } from './base.js';
 
 const names = {
   door: 'Door',

@@ -1,11 +1,11 @@
 import { ShellyPlusI4, ShellyPlusI4V3 } from 'shellies-ds9';
 
-import { DeviceDelegate } from './base';
+import { DeviceDelegate } from './base.js';
 import {
   ReadonlySwitchAbility,
   ServiceLabelAbility,
   StatelessProgrammableSwitchAbility,
-} from '../abilities';
+} from '../abilities/index.js';
 
 /**
  * Handles Shelly Plus I4 devices.

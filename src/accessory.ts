@@ -1,9 +1,9 @@
 import { DeviceId } from 'shellies-ds9';
 import { PlatformAccessory } from 'homebridge';
 
-import { Ability } from './abilities';
-import { DeviceLogger } from './utils/device-logger';
-import { ShellyPlatform } from './platform';
+import { Ability } from './abilities/index.js';
+import { DeviceLogger } from './utils/device-logger.js';
+import { ShellyPlatform } from './platform.js';
 
 export type AccessoryId = string;
 export type AccessoryUuid = string;

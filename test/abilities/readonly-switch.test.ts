@@ -1,4 +1,4 @@
-import { Characteristic, Service, Perms } from 'hap-nodejs';
+import { Characteristic, Service, Perms } from '@homebridge/hap-nodejs';
 
 import { ReadonlySwitchAbility } from '../../src/abilities';
 import { createTestPlatform } from '../mocks/platform';

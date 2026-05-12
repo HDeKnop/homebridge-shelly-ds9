@@ -1,7 +1,10 @@
 import { EventEmitter } from 'events';
-import * as hap from 'hap-nodejs';
-import { PlatformAccessory } from 'homebridge/lib/platformAccessory';
-import type { API, Logger, LogLevel } from 'homebridge';
+import * as hap from '@homebridge/hap-nodejs';
+import type { API, Logger, LogLevel, PlatformAccessory } from 'homebridge';
+// Load PlatformAccessory class at runtime bypassing homebridge@2 exports map restriction
+// (mapped to node_modules/homebridge/dist/platformAccessory.js via moduleNameMapper in jest.config.cjs)
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const PlatformAccessoryCtor = (require('homebridge/dist/platformAccessory') as { PlatformAccessory: new (...args: unknown[]) => PlatformAccessory }).PlatformAccessory;
 
 /**
  * A captured invocation of one of the homebridge accessory-registration calls.
@@ -76,7 +79,7 @@ export const createMockApi = (storagePath = '/tmp/shelly-ds9-test'): MockApi => 
     },
     hap,
     hapLegacyTypes: hap.LegacyTypes,
-    platformAccessory: PlatformAccessory,
+    platformAccessory: PlatformAccessoryCtor,
     versionGreaterOrEqual: (version: string) => true,
 
     registerAccessory: jest.fn(),

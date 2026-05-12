@@ -1,7 +1,7 @@
 import { Perms } from 'homebridge';
 import { CharacteristicValue as ShelliesCharacteristicValue, Input } from 'shellies-ds9';
 
-import { Ability, ServiceClass } from './base';
+import { Ability, ServiceClass } from './base.js';
 
 /**
  * This ability creates a switch that can't be controlled from HomeKit, it only reflects

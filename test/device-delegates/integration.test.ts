@@ -8,7 +8,7 @@
  * delegate creates the correct accessories with the correct HomeKit
  * services, and that state changes flow through to characteristic updates.
  */
-import { Characteristic, Service } from 'hap-nodejs';
+import { Characteristic, Service } from '@homebridge/hap-nodejs';
 
 import {
   DeviceDelegate,
