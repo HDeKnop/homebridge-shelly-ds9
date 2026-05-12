@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "watch": "tsc --watch",
-    "lint": "eslint ./src --ext .ts,.js --max-warnings=0",
+    "lint": "eslint src --max-warnings=0",
     "preversion": "npm run build && npm run lint",
     "postversion": "git push && git push --tags",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
@@ -36,15 +36,12 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.19",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "eslint": "^8.55.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.0.1",
+    "eslint": "^10.3.0",
     "homebridge": "^2.0.0",
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.59.3"
   },
   "dependencies": {
     "shellies-ds9": "^1.1.9"

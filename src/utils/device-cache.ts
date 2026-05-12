@@ -65,7 +65,7 @@ export class DeviceCache {
     try {
       // see if the cache file exists
       await fs.access(this.path);
-    } catch (_) {
+    } catch {
       // the file doesn't exist
       this.log.debug(`Device cache file ${this.path} not found`);
       return;
