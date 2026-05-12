@@ -111,7 +111,7 @@ export abstract class Ability {
     return this._active;
   }
 
-  set active(value) {
+  set active(value: boolean) {
     if (value === this._active) {
       return;
     }
@@ -288,12 +288,12 @@ export abstract class Ability {
   /**
    * Subclasses should use this method to initialize the service and attach their event listeners.
    */
-  protected abstract initialize();
+  protected abstract initialize(): void;
 
   /**
    * Subclasses should use this method to remove their event listeners.
    */
-  abstract detach();
+  abstract detach(): void;
 
   /**
    * Refreshes the state of this ability.
