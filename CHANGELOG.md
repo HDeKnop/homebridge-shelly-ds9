@@ -50,6 +50,16 @@ for in-progress work.
 - Typos in inline comments fixed; `handleDisconnect` log building refactored to template
   literals (CC-9/10)
 - Exhaustive `default` branch added to `triggerPress` switch-case (CC-11)
+- ESLint 10 + `typescript-eslint` v8 flat config migration (DEP-3)
+- Toolchain aligned with `homebridge-plugin-template`: `typescript@^6.0.3`,
+  `@types/node@^25`, `rimraf@^6`
+- Vitest 4 test suite added covering config parsing, device cache (incl. SEC-1
+  corruption guards), device-logger, ability state machines and event handlers
+  (switch, outlet, light, cover, ventilation), accessory lifecycle, device
+  delegate registry, and a built-artifact smoke test. 113 tests, runs in ~2s
+- CI workflow expanded: tests now gate merges on Node 22 + 24; v8 coverage
+  artifact uploaded from Node 22; new `package-check` job runs `npm pack
+  --dry-run` to validate the publishable tarball (CICD-1)
 
 ---
 
