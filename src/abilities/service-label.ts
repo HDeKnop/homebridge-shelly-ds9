@@ -16,10 +16,7 @@ export class ServiceLabelAbility extends Ability {
     const SLN = this.Characteristic.ServiceLabelNamespace;
 
     // set the namespace
-    this.service.setCharacteristic(
-      SLN,
-      this.namespace === 'dots' ? SLN.DOTS : SLN.ARABIC_NUMERALS,
-    );
+    this.service.setCharacteristic(SLN, this.namespace === 'dots' ? SLN.DOTS : SLN.ARABIC_NUMERALS);
   }
 
   detach() {

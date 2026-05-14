@@ -5,17 +5,18 @@
 This is a personal fork of [homebridge-shelly-ds9](https://github.com/alexryd/homebridge-shelly-ds9)
 packaged as `homebridge-shelly-ds9-dev`. Only the current `main` branch receives security fixes.
 
-| Branch | Supported |
-|--------|-----------|
-| `main` | Yes |
-| `hubris` | In-progress work — not for production |
-| Older tags | No |
+| Branch     | Supported                             |
+| ---------- | ------------------------------------- |
+| `main`     | Yes                                   |
+| `hubris`   | In-progress work — not for production |
+| Older tags | No                                    |
 
 ## Reporting a Vulnerability
 
 Please **do not** open a public GitHub issue for security vulnerabilities.
 
 Report security issues privately by emailing **hdeknop@gmail.com** with:
+
 - A description of the vulnerability and its potential impact
 - Steps to reproduce or a proof-of-concept (if safe to share)
 - Any suggested mitigations

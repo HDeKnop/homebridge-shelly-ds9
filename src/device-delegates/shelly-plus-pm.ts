@@ -15,8 +15,4 @@ export class ShellyPlusPmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPlusPmDelegate,
-  ShellyPlusPmMini,
-  ShellyPlusPmMiniV3,
-);
+DeviceDelegate.registerDelegate(ShellyPlusPmDelegate, ShellyPlusPmMini, ShellyPlusPmMiniV3);

@@ -1,8 +1,4 @@
-import {
-  ShellyDimmer,
-  ShellyProDimmer1Pm,
-  ShellyProDimmer1Pm2,
-} from 'shellies-ds9';
+import { ShellyDimmer, ShellyProDimmer1Pm, ShellyProDimmer1Pm2 } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base.js';
 
@@ -17,9 +13,4 @@ export class ShellyProDimmer1PmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyProDimmer1PmDelegate,
-  ShellyProDimmer1Pm,
-  ShellyProDimmer1Pm2,
-  ShellyDimmer,
-);
+DeviceDelegate.registerDelegate(ShellyProDimmer1PmDelegate, ShellyProDimmer1Pm, ShellyProDimmer1Pm2, ShellyDimmer);

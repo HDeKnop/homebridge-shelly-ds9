@@ -8,10 +8,7 @@ export class OutletAbility extends Ability {
    * @param component - The switch component to control.
    */
   constructor(readonly component: Switch) {
-    super(
-      `Outlet ${component.id + 1}`,
-      `outlet-${component.id}`,
-    );
+    super(`Outlet ${component.id + 1}`, `outlet-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -27,35 +24,24 @@ export class OutletAbility extends Ability {
 
     // set the initial values
     this.service
-      .setCharacteristic(
-        this.Characteristic.On,
-        this.component.output,
-      ).setCharacteristic(
-        this.Characteristic.OutletInUse,
-        this.component.apower !== undefined && this.component.apower !== 0,
-      );
+      .setCharacteristic(this.Characteristic.On, this.component.output)
+      .setCharacteristic(this.Characteristic.OutletInUse, this.component.apower !== undefined && this.component.apower !== 0);
 
     // listen for commands from HomeKit
-    this.service.getCharacteristic(this.Characteristic.On)
-      .onSet(this.onSetHandler.bind(this))
-      .onGet(this.onGetHandler.bind(this));
+    this.service.getCharacteristic(this.Characteristic.On).onSet(this.onSetHandler.bind(this)).onGet(this.onGetHandler.bind(this));
 
     // listen for updates from the device
-    this.component
-      .on('change:output', this.outputChangeHandler, this)
-      .on('change:apower', this.apowerChangeHandler, this);
+    this.component.on('change:output', this.outputChangeHandler, this).on('change:apower', this.apowerChangeHandler, this);
   }
 
   detach() {
-    this.component
-      .off('change:output', this.outputChangeHandler, this)
-      .off('change:apower', this.apowerChangeHandler, this);
+    this.component.off('change:output', this.outputChangeHandler, this).off('change:apower', this.apowerChangeHandler, this);
   }
 
   refreshState() {
-    this.service.getCharacteristic(this.Characteristic.On)
-      .updateValue(this.component.output);
-    this.service.getCharacteristic(this.Characteristic.OutletInUse)
+    this.service.getCharacteristic(this.Characteristic.On).updateValue(this.component.output);
+    this.service
+      .getCharacteristic(this.Characteristic.OutletInUse)
       .updateValue(this.component.apower !== undefined && this.component.apower !== 0);
   }
 
@@ -77,10 +63,7 @@ export class OutletAbility extends Ability {
     try {
       await this.component.set(value as boolean);
     } catch (e) {
-      this.log.error(
-        'Failed to set switch:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set switch:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
   }
@@ -90,15 +73,13 @@ export class OutletAbility extends Ability {
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
     this.log.info(`Outlet Status(${this.component.id}): ${value ? 'on' : 'off'}`);
-    this.service.getCharacteristic(this.Characteristic.On)
-      .updateValue(value as boolean);
+    this.service.getCharacteristic(this.Characteristic.On).updateValue(value as boolean);
   }
 
   /**
    * Handles changes to the `apower` property.
    */
   protected apowerChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.getCharacteristic(this.Characteristic.OutletInUse)
-      .updateValue(value as number);
+    this.service.getCharacteristic(this.Characteristic.OutletInUse).updateValue(value as number);
   }
 }

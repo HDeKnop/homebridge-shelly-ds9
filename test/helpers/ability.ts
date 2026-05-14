@@ -27,11 +27,7 @@ export function setupAbility(ability: Ability, displayName = 'Test Accessory'): 
   const device = new FakeDevice();
   const deviceLog = new DeviceLogger(device as unknown as Device, displayName, baseLog);
 
-  ability.setup(
-    accessory as unknown as PlatformAccessory,
-    platform as unknown as ShellyPlatform,
-    deviceLog,
-  );
+  ability.setup(accessory as unknown as PlatformAccessory, platform as unknown as ShellyPlatform, deviceLog);
 
   return { platform, accessory, baseLog, deviceLog, device };
 }

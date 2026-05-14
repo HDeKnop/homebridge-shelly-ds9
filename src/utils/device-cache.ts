@@ -51,7 +51,10 @@ export class DeviceCache {
    * @param storagePath - A path to the directory that the devices will be stored in.
    * @param log - A logging device.
    */
-  constructor(storagePath: string, readonly log: Logger) {
+  constructor(
+    storagePath: string,
+    readonly log: Logger
+  ) {
     this.path = resolve(storagePath, FILENAME);
   }
 
@@ -78,10 +81,7 @@ export class DeviceCache {
     try {
       s = JSON.parse(data) as DeviceStorage;
     } catch (e) {
-      this.log.error(
-        'Device cache file is corrupted and will be ignored:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Device cache file is corrupted and will be ignored:', e instanceof Error ? e.message : e);
       return;
     }
 
@@ -128,10 +128,7 @@ export class DeviceCache {
       try {
         await this.save();
       } catch (e) {
-        this.log.error(
-          'Failed to save devices to cache:',
-          e instanceof Error ? e.message : e,
-        );
+        this.log.error('Failed to save devices to cache:', e instanceof Error ? e.message : e);
       }
     }, SAVE_DELAY);
   }
@@ -176,7 +173,7 @@ export class DeviceCache {
         protocol,
         hostname,
       },
-      autoSave,
+      autoSave
     );
   }
 

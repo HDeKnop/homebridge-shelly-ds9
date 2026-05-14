@@ -1,11 +1,7 @@
 import { ShellyPlusI4, ShellyPlusI4V3 } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base.js';
-import {
-  ReadonlySwitchAbility,
-  ServiceLabelAbility,
-  StatelessProgrammableSwitchAbility,
-} from '../abilities/index.js';
+import { ReadonlySwitchAbility, ServiceLabelAbility, StatelessProgrammableSwitchAbility } from '../abilities/index.js';
 
 /**
  * Handles Shelly Plus I4 devices.
@@ -24,49 +20,19 @@ export class ShellyPlusI4Delegate extends DeviceDelegate {
     this.createAccessory(
       'buttons',
       null,
-      new StatelessProgrammableSwitchAbility(d.input0).setActive(
-        input0IsButton,
-      ),
-      new StatelessProgrammableSwitchAbility(d.input1).setActive(
-        input1IsButton,
-      ),
-      new StatelessProgrammableSwitchAbility(d.input2).setActive(
-        input2IsButton,
-      ),
-      new StatelessProgrammableSwitchAbility(d.input3).setActive(
-        input3IsButton,
-      ),
-      new ServiceLabelAbility(),
-    ).setActive(
-      input0IsButton || input1IsButton || input2IsButton || input3IsButton,
-    );
+      new StatelessProgrammableSwitchAbility(d.input0).setActive(input0IsButton),
+      new StatelessProgrammableSwitchAbility(d.input1).setActive(input1IsButton),
+      new StatelessProgrammableSwitchAbility(d.input2).setActive(input2IsButton),
+      new StatelessProgrammableSwitchAbility(d.input3).setActive(input3IsButton),
+      new ServiceLabelAbility()
+    ).setActive(input0IsButton || input1IsButton || input2IsButton || input3IsButton);
 
     // create accessories for all switch inputs
-    this.createAccessory(
-      'switch0',
-      null,
-      new ReadonlySwitchAbility(d.input0),
-    ).setActive(!input0IsButton);
-    this.createAccessory(
-      'switch1',
-      null,
-      new ReadonlySwitchAbility(d.input1),
-    ).setActive(!input1IsButton);
-    this.createAccessory(
-      'switch2',
-      null,
-      new ReadonlySwitchAbility(d.input2),
-    ).setActive(!input2IsButton);
-    this.createAccessory(
-      'switch3',
-      null,
-      new ReadonlySwitchAbility(d.input3),
-    ).setActive(!input3IsButton);
+    this.createAccessory('switch0', null, new ReadonlySwitchAbility(d.input0)).setActive(!input0IsButton);
+    this.createAccessory('switch1', null, new ReadonlySwitchAbility(d.input1)).setActive(!input1IsButton);
+    this.createAccessory('switch2', null, new ReadonlySwitchAbility(d.input2)).setActive(!input2IsButton);
+    this.createAccessory('switch3', null, new ReadonlySwitchAbility(d.input3)).setActive(!input3IsButton);
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPlusI4Delegate,
-  ShellyPlusI4,
-  ShellyPlusI4V3,
-);
+DeviceDelegate.registerDelegate(ShellyPlusI4Delegate, ShellyPlusI4, ShellyPlusI4V3);

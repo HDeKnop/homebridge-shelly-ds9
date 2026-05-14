@@ -17,7 +17,10 @@ export class FakeCharacteristic {
   readonly setHistory: unknown[] = [];
   readonly updateHistory: unknown[] = [];
 
-  constructor(readonly uuid: string, readonly displayName: string) {}
+  constructor(
+    readonly uuid: string,
+    readonly displayName: string
+  ) {}
 
   onSet(handler: (v: unknown) => unknown): this {
     this.onSetHandler = handler;
@@ -57,7 +60,7 @@ export class FakeService {
   constructor(
     readonly serviceClass: ServiceClass,
     displayName: string,
-    readonly subtype?: string,
+    readonly subtype?: string
   ) {
     this.displayName = displayName;
   }
@@ -100,7 +103,10 @@ export class FakePlatformAccessory {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   context: any = {};
 
-  constructor(readonly _name: string, readonly UUID: string) {
+  constructor(
+    readonly _name: string,
+    readonly UUID: string
+  ) {
     this.displayName = _name;
   }
 

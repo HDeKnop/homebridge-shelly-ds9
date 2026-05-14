@@ -8,10 +8,7 @@ export class LightAbility extends Ability {
    * @param component - The light component to control.
    */
   constructor(readonly component: Light) {
-    super(
-      `Light ${component.id + 1}`,
-      `light-${component.id}`,
-    );
+    super(`Light ${component.id + 1}`, `light-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -20,16 +17,12 @@ export class LightAbility extends Ability {
 
   protected initialize() {
     // set the initial value
-    this.service.setCharacteristic(
-      this.Characteristic.On,
-      this.component.output,
-    );
+    this.service.setCharacteristic(this.Characteristic.On, this.component.output);
 
     // listen for commands from HomeKit
-    this.service.getCharacteristic(this.Characteristic.On)
-      .onSet(this.onSetHandler.bind(this))
-      .onGet(this.onGetHandler.bind(this));
-    this.service.getCharacteristic(this.Characteristic.Brightness)
+    this.service.getCharacteristic(this.Characteristic.On).onSet(this.onSetHandler.bind(this)).onGet(this.onGetHandler.bind(this));
+    this.service
+      .getCharacteristic(this.Characteristic.Brightness)
       .onSet(this.brightnessSetHandler.bind(this))
       .onGet(this.brightnessGetHandler.bind(this));
 
@@ -44,10 +37,8 @@ export class LightAbility extends Ability {
   }
 
   refreshState() {
-    this.service.getCharacteristic(this.Characteristic.On)
-      .updateValue(this.component.output);
-    this.service.getCharacteristic(this.Characteristic.Brightness)
-      .updateValue(this.component.brightness);
+    this.service.getCharacteristic(this.Characteristic.On).updateValue(this.component.output);
+    this.service.getCharacteristic(this.Characteristic.Brightness).updateValue(this.component.brightness);
   }
 
   /**
@@ -61,10 +52,7 @@ export class LightAbility extends Ability {
     try {
       await this.component.set(value as boolean);
     } catch (e) {
-      this.log.error(
-        'Failed to set light:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set light:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
   }
@@ -81,8 +69,7 @@ export class LightAbility extends Ability {
    */
   protected outputChangeHandler(value: ShelliesCharacteristicValue) {
     this.log.info(`Light Status(${this.component.id}): ${value ? 'on' : 'off'}`);
-    this.service.getCharacteristic(this.Characteristic.On)
-      .updateValue(value as boolean);
+    this.service.getCharacteristic(this.Characteristic.On).updateValue(value as boolean);
   }
 
   /**
@@ -96,10 +83,7 @@ export class LightAbility extends Ability {
     try {
       await this.component.set(undefined, value as number);
     } catch (e) {
-      this.log.error(
-        'Failed to set light:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set light:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
   }
@@ -116,7 +100,6 @@ export class LightAbility extends Ability {
    */
   protected brightnessChangeHandler(value: ShelliesCharacteristicValue) {
     this.log.info(`Light Brightness(${this.component.id}): ${value}`);
-    this.service.getCharacteristic(this.Characteristic.Brightness)
-      .updateValue(value as number);
+    this.service.getCharacteristic(this.Characteristic.Brightness).updateValue(value as number);
   }
 }

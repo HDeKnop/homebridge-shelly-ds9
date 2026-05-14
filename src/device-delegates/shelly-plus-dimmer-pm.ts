@@ -13,7 +13,4 @@ export class ShellyPlusDimmer010PmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPlusDimmer010PmDelegate,
-  ShellyPlusPMDimmer,
-);
+DeviceDelegate.registerDelegate(ShellyPlusDimmer010PmDelegate, ShellyPlusPMDimmer);

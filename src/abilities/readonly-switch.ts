@@ -12,10 +12,7 @@ export class ReadonlySwitchAbility extends Ability {
    * @param component - The input component to represent.
    */
   constructor(readonly component: Input) {
-    super(
-      `Switch ${component.id + 1}`,
-      `readonly-switch-${component.id}`,
-    );
+    super(`Switch ${component.id + 1}`, `readonly-switch-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -23,7 +20,8 @@ export class ReadonlySwitchAbility extends Ability {
   }
 
   protected initialize() {
-    this.service.getCharacteristic(this.Characteristic.On)
+    this.service
+      .getCharacteristic(this.Characteristic.On)
       // remove the write permissions
       .setProps({
         perms: [Perms.NOTIFY, Perms.PAIRED_READ],
@@ -43,9 +41,8 @@ export class ReadonlySwitchAbility extends Ability {
    * Handles changes to the `state` property.
    */
   protected stateChangeHandler(value: ShelliesCharacteristicValue) {
-    const v: boolean = value === null ? false : value as boolean;
+    const v: boolean = value === null ? false : (value as boolean);
     this.log.info(`Switch Status(${this.component.id}): ${v ? 'on' : 'off'}`);
-    this.service.getCharacteristic(this.Characteristic.On)
-      .updateValue(v);
+    this.service.getCharacteristic(this.Characteristic.On).updateValue(v);
   }
 }

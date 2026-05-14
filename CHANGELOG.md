@@ -12,6 +12,7 @@ for in-progress work.
 ## [Unreleased — hubris branch]
 
 ### Fixed
+
 - Device cache no longer crashes the plugin on startup if the cache file is corrupted or has an
   unexpected format; the file is skipped with an error log instead (SEC-1)
 - `SwitchAbility`, `OutletAbility`, and `LightAbility` now implement `refreshState()` so HomeKit
@@ -25,6 +26,7 @@ for in-progress work.
 - Service-name collision no longer hides unnamed Shelly channels in Node-RED
 
 ### Changed
+
 - Homebridge 1.x compatibility shim for `Fan`/`Fanv2` removed; `VentilationAbility` now
   targets `Service.Fanv2` directly and requires Homebridge ≥ 2.0 (HB-1/2/3)
 - `engines.homebridge` narrowed to `^2.0.0`; `engines.node` requires `^22.0.0 || ^24.0.0`
@@ -37,6 +39,7 @@ for in-progress work.
 - Log handler strings across all abilities use template literals consistently (CC-3)
 
 ### Internal
+
 - `tsconfig.json`: removed `noImplicitAny: false` override that was silently cancelling
   `strict: true`; two resulting implicit-any sites fixed (TS-2)
 - Abstract method signatures `initialize()`, `detach()`, `setup()` now declare explicit `: void`
@@ -59,13 +62,14 @@ for in-progress work.
   delegate registry, and a built-artifact smoke test. 113 tests, runs in ~2s
 - CI workflow expanded: tests now gate merges on Node 22 + 24; v8 coverage
   artifact uploaded from Node 22; new `package-check` job runs `npm pack
-  --dry-run` to validate the publishable tarball (CICD-1)
+--dry-run` to validate the publishable tarball (CICD-1)
 
 ---
 
 ## [1.5.8] — upstream baseline (fork diverges here)
 
 ### Added
+
 - Support for gen3 Dimmer and Pro Dimmer 0/1–10V PM devices
 - Support for gen3 2-PM device (based on Shelly Plus 2 PM)
 - Support for `shelly0110dimg3` (gen3 dimmer variant)
@@ -73,6 +77,7 @@ for in-progress work.
 - Homebridge 2.0 compatibility
 
 ### Fixed
+
 - Cover getting out of sync with relay when using physical switches
 - Cover PM functionality
 - Cover TargetPosition reconciliation when `current_pos` hits a hard limit (0 or 100)
@@ -87,6 +92,7 @@ for in-progress work.
 ## [1.5.2]
 
 ### Added
+
 - Shelly Plus Plug UK and IT variants
 - Beta support for Dual Cover PM
 
@@ -95,6 +101,7 @@ for in-progress work.
 ## [1.5.1]
 
 ### Added
+
 - Various device and bug-fix updates (see git log)
 
 ---
@@ -102,6 +109,7 @@ for in-progress work.
 ## [1.5.0]
 
 ### Added
+
 - Initial release of the 1.5.x line
 
 ---

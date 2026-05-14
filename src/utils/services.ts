@@ -14,10 +14,7 @@ export interface CustomServices {
  * @param api - A reference to the homebridge API.
  * @param characteristics - Custom characteristics used with these services.
  */
-export const createServices = (
-  api: API,
-  characteristics: CustomCharacteristics,
-): CustomServices => {
+export const createServices = (api: API, characteristics: CustomCharacteristics): CustomServices => {
   /**
    * Reports power meter readings.
    */

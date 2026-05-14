@@ -2,6 +2,7 @@
   "name": "homebridge-shelly-ds9-dev",
   "version": "1.5.9-hubris.15",
   "description": "Homebridge plugin for the next generation of Shelly devices",
+  "type": "module",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -14,12 +15,13 @@
     "build": "rimraf ./dist && tsc",
     "watch": "tsc --watch",
     "lint": "eslint src test --max-warnings=0",
+    "format": "prettier --write \"./**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"./**/*.{ts,js,json,md}\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "preversion": "npm run build && npm run lint && npm test",
-    "postversion": "git push && git push --tags",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
+    "postversion": "git push && git push --tags"
   },
   "engines": {
     "node": "^22.0.0 || ^24.0.0",
@@ -45,9 +47,11 @@
     "url": "https://ko-fi.com/HDEKNOP"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.7.0",
     "@vitest/coverage-v8": "^4.1.6",
     "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.0.0",
     "homebridge": "^2.0.0",
     "prettier": "^3.1.0",
     "rimraf": "^6.1.3",

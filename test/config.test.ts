@@ -3,10 +3,11 @@ import type { PlatformConfig } from 'homebridge';
 
 import { PlatformOptions } from '../src/config.js';
 
-const cfg = (partial: Record<string, unknown> = {}): PlatformConfig => ({
-  platform: 'ShellyDS9-dev',
-  ...partial,
-} as PlatformConfig);
+const cfg = (partial: Record<string, unknown> = {}): PlatformConfig =>
+  ({
+    platform: 'ShellyDS9-dev',
+    ...partial,
+  }) as PlatformConfig;
 
 describe('PlatformOptions', () => {
   it('applies default mDNS options when none provided', () => {
@@ -59,12 +60,14 @@ describe('PlatformOptions', () => {
   });
 
   it('stores devices keyed by lowercased ID', () => {
-    const opts = new PlatformOptions(cfg({
-      devices: [
-        { id: 'SHELLYPLUS1-AABBCC', name: 'Light 1' },
-        { id: 'shellyplus2pm-112233', exclude: true },
-      ],
-    }));
+    const opts = new PlatformOptions(
+      cfg({
+        devices: [
+          { id: 'SHELLYPLUS1-AABBCC', name: 'Light 1' },
+          { id: 'shellyplus2pm-112233', exclude: true },
+        ],
+      })
+    );
     expect(opts.getDeviceOptions('shellyplus1-aabbcc').name).toBe('Light 1');
     expect(opts.getDeviceOptions('shellyplus2pm-112233').exclude).toBe(true);
   });
@@ -77,23 +80,21 @@ describe('PlatformOptions', () => {
   });
 
   it('ignores invalid device entries (missing id, non-string id, nullish)', () => {
-    const opts = new PlatformOptions(cfg({
-      devices: [
-        { id: 'good-1' },
-        { id: 123 },
-        null,
-        {},
-        undefined,
-      ],
-    }));
+    const opts = new PlatformOptions(
+      cfg({
+        devices: [{ id: 'good-1' }, { id: 123 }, null, {}, undefined],
+      })
+    );
     expect(opts.deviceOptions.size).toBe(1);
     expect(opts.deviceOptions.has('good-1')).toBe(true);
   });
 
   it('preserves protocol and exclude defaults on user device entries', () => {
-    const opts = new PlatformOptions(cfg({
-      devices: [{ id: 'dev-1', name: 'Test' }],
-    }));
+    const opts = new PlatformOptions(
+      cfg({
+        devices: [{ id: 'dev-1', name: 'Test' }],
+      })
+    );
     const d = opts.getDeviceOptions('dev-1');
     expect(d.protocol).toBe('websocket');
     expect(d.exclude).toBe(false);

@@ -13,10 +13,7 @@ export class StatelessProgrammableSwitchAbility extends Ability {
    * @param component - The input component to control.
    */
   constructor(readonly component: Input) {
-    super(
-      `Button ${component.id + 1}`,
-      `stateless-programmable-switch-${component.id}`,
-    );
+    super(`Button ${component.id + 1}`, `stateless-programmable-switch-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -25,10 +22,7 @@ export class StatelessProgrammableSwitchAbility extends Ability {
 
   protected initialize() {
     // set the index number for this switch
-    this.service.setCharacteristic(
-      this.Characteristic.ServiceLabelIndex,
-      this.component.id + 1,
-    );
+    this.service.setCharacteristic(this.Characteristic.ServiceLabelIndex, this.component.id + 1);
 
     // listen for button press events
     this.component
@@ -76,8 +70,7 @@ export class StatelessProgrammableSwitchAbility extends Ability {
     }
 
     // update the characteristic
-    this.service.getCharacteristic(this.Characteristic.ProgrammableSwitchEvent)
-      .updateValue(value);
+    this.service.getCharacteristic(this.Characteristic.ProgrammableSwitchEvent).updateValue(value);
   }
 
   /**

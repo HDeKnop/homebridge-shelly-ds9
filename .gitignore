@@ -2,3 +2,11 @@ dist
 node_modules
 coverage
 .DS_Store
+
+# Legacy ESLint config files — replaced by flat config (eslint.config.js).
+# Pinned in .gitignore because iCloud sync from other machines occasionally
+# restores them.
+.eslintrc.json
+eslintrc.json
+.eslintrc.js
+.eslintrc.cjs

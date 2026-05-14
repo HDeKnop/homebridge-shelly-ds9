@@ -80,7 +80,7 @@ src/
 
    DeviceDelegate.registerDelegate(
      ShellyMyDeviceDelegate,
-     ShellyMyDevice,
+     ShellyMyDevice
      // add any variant classes here
    );
    ```
@@ -92,13 +92,13 @@ src/
 
 ### Helper methods on `DeviceDelegate`
 
-| Method | Use for |
-|--------|---------|
-| `addSwitch(swtch, opts?)` | A switch component; handles outlet/switch type and power metering automatically |
-| `addCover(cover, opts?)` | A cover component; handles door/window/windowCovering type |
-| `addLight(light, opts?)` | A light/dimmer component; handles light/ventilator/fan type |
-| `createAccessory(id, nameSuffix, ...abilities)` | Any other combination of abilities |
-| `createAccessoryWithFullName(id, name, ...abilities)` | When the component has its own name that should stand alone |
+| Method                                                | Use for                                                                         |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `addSwitch(swtch, opts?)`                             | A switch component; handles outlet/switch type and power metering automatically |
+| `addCover(cover, opts?)`                              | A cover component; handles door/window/windowCovering type                      |
+| `addLight(light, opts?)`                              | A light/dimmer component; handles light/ventilator/fan type                     |
+| `createAccessory(id, nameSuffix, ...abilities)`       | Any other combination of abilities                                              |
+| `createAccessoryWithFullName(id, name, ...abilities)` | When the component has its own name that should stand alone                     |
 
 ### Single vs. multi-component devices
 
@@ -117,6 +117,7 @@ check `device.profile` and pass `{ active: true/false }` accordingly.
 4. Export it from `src/abilities/index.ts`.
 
 Key patterns from `Ability`:
+
 - Access the HomeKit service via `this.service` (throws if called before `setup()`).
 - Access HAP types via `this.Service` and `this.Characteristic` (shortcuts to `api.hap.*`).
 - Log via `this.log` (DeviceLogger — prefixes messages with device ID).
@@ -130,7 +131,7 @@ Key patterns from `Ability`:
 - **Lint** is a hard gate: `npm run lint` must produce zero warnings.
 - **No `any`** — use proper types or `unknown` with a narrowing cast.
 - **Template literals** for string interpolation, not concatenation.
-- **No comments** unless the *why* is non-obvious. Don't describe what the code does.
+- **No comments** unless the _why_ is non-obvious. Don't describe what the code does.
 - **Abstract method signatures** must include explicit return types (`void`, etc.).
 - **Setter parameters** must have explicit types (`set active(value: boolean)`).
 - Event listeners use the `this` binding parameter of `on()`/`off()` rather than `.bind(this)`:
