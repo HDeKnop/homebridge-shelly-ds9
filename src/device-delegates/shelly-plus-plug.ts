@@ -1,9 +1,4 @@
-import {
-  ShellyPlusPlugUs,
-  ShellyPlusPlugEu,
-  ShellyPlusPlugIt,
-  ShellyPlusPlugUk,
-} from 'shellies-ds9';
+import { ShellyPlusPlugUs, ShellyPlusPlugEu, ShellyPlusPlugIt, ShellyPlusPlugUk } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base.js';
 
@@ -18,10 +13,4 @@ export class ShellyPlusPlugUsDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPlusPlugUsDelegate,
-  ShellyPlusPlugUs,
-  ShellyPlusPlugEu,
-  ShellyPlusPlugIt,
-  ShellyPlusPlugUk,
-);
+DeviceDelegate.registerDelegate(ShellyPlusPlugUsDelegate, ShellyPlusPlugUs, ShellyPlusPlugEu, ShellyPlusPlugIt, ShellyPlusPlugUk);

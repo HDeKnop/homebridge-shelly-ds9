@@ -103,8 +103,8 @@
                   "description": "The type of accessory used to represent the switch.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Outlet", "enum": [ "outlet" ] },
-                    { "title": "Switch", "enum": [ "switch" ] }
+                    { "title": "Outlet", "enum": ["outlet"] },
+                    { "title": "Switch", "enum": ["switch"] }
                   ],
                   "default": "switch"
                 }
@@ -124,8 +124,8 @@
                   "description": "The type of accessory used to represent the switch.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Outlet", "enum": [ "outlet" ] },
-                    { "title": "Switch", "enum": [ "switch" ] }
+                    { "title": "Outlet", "enum": ["outlet"] },
+                    { "title": "Switch", "enum": ["switch"] }
                   ],
                   "default": "switch"
                 }
@@ -145,8 +145,8 @@
                   "description": "The type of accessory used to represent the switch.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Outlet", "enum": [ "outlet" ] },
-                    { "title": "Switch", "enum": [ "switch" ] }
+                    { "title": "Outlet", "enum": ["outlet"] },
+                    { "title": "Switch", "enum": ["switch"] }
                   ],
                   "default": "switch"
                 }
@@ -166,8 +166,8 @@
                   "description": "The type of accessory used to represent the switch.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Outlet", "enum": [ "outlet" ] },
-                    { "title": "Switch", "enum": [ "switch" ] }
+                    { "title": "Outlet", "enum": ["outlet"] },
+                    { "title": "Switch", "enum": ["switch"] }
                   ],
                   "default": "switch"
                 }
@@ -187,9 +187,9 @@
                   "description": "The type of accessory used to represent the cover. This setting apply only when the device is in cover mode.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Door", "enum": [ "door" ] },
-                    { "title": "Window", "enum": [ "window" ] },
-                    { "title": "Window Covering", "enum": [ "windowCovering" ] }
+                    { "title": "Door", "enum": ["door"] },
+                    { "title": "Window", "enum": ["window"] },
+                    { "title": "Window Covering", "enum": ["windowCovering"] }
                   ],
                   "default": "window"
                 }
@@ -209,9 +209,9 @@
                   "description": "Choose how this light should appear in HomeKit.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Light", "enum": [ "light" ] },
-                    { "title": "Ventilation Fan", "enum": [ "ventilator" ] },
-                    { "title": "Fan", "enum": [ "fan" ] }
+                    { "title": "Light", "enum": ["light"] },
+                    { "title": "Ventilation Fan", "enum": ["ventilator"] },
+                    { "title": "Fan", "enum": ["fan"] }
                   ],
                   "default": "light"
                 }
@@ -231,9 +231,9 @@
                   "description": "Choose how this light should appear in HomeKit.",
                   "type": "string",
                   "oneOf": [
-                    { "title": "Light", "enum": [ "light" ] },
-                    { "title": "Ventilation Fan", "enum": [ "ventilator" ] },
-                    { "title": "Fan", "enum": [ "fan" ] }
+                    { "title": "Light", "enum": ["light"] },
+                    { "title": "Ventilation Fan", "enum": ["ventilator"] },
+                    { "title": "Fan", "enum": ["fan"] }
                   ],
                   "default": "light"
                 }
@@ -277,70 +277,49 @@
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyplus1|shellyplus1pm|shellyplus2pm|shellyplusplug|shellyplusplugus|shellypro1|shellypro1pm|shellypro2|shellypro2pm|shellypro3|shellypro4pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].switch:0.exclude",
-            "devices[].switch:0.type"
-          ]
+          "items": ["devices[].switch:0.exclude", "devices[].switch:0.type"]
         },
         {
           "key": "devices[].switch:1",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyplus2pm|shellypro2|shellypro2pm|shellypro3|shellypro4pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].switch:1.exclude",
-            "devices[].switch:1.type"
-          ]
+          "items": ["devices[].switch:1.exclude", "devices[].switch:1.type"]
         },
         {
           "key": "devices[].switch:2",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellypro3|shellypro4pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].switch:2.exclude",
-            "devices[].switch:2.type"
-          ]
+          "items": ["devices[].switch:2.exclude", "devices[].switch:2.type"]
         },
         {
           "key": "devices[].switch:3",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellypro4pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].switch:3.exclude",
-            "devices[].switch:3.type"
-          ]
+          "items": ["devices[].switch:3.exclude", "devices[].switch:3.type"]
         },
         {
           "key": "devices[].cover:0",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/\\s*(?:shellyplus2pm|shellypro2pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].cover:0.exclude",
-            "devices[].cover:0.type"
-          ]
+          "items": ["devices[].cover:0.exclude", "devices[].cover:0.type"]
         },
         {
           "key": "devices[].light:0",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyplusdimmer|shellyplusdimmerpm|shellyprodimmer1pm|shellyprodimmer2pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].light:0.exclude",
-            "devices[].light:0.type"
-          ]
+          "items": ["devices[].light:0.exclude", "devices[].light:0.type"]
         },
         {
           "key": "devices[].light:1",
           "condition": {
             "functionBody": "return model.devices && !model.devices[arrayIndices[0]].exclude && model.devices[arrayIndices[0]].id && model.devices[arrayIndices[0]].id.match(/^\\s*(?:shellyprodimmer2pm|shelly0110dimg3)-/i) !== null"
           },
-          "items": [
-            "devices[].light:1.exclude",
-            "devices[].light:1.type"
-          ]
+          "items": ["devices[].light:1.exclude", "devices[].light:1.type"]
         }
       ]
     },
@@ -360,11 +339,7 @@
       "type": "fieldset",
       "expandable": true,
       "title": "WebSocket connections",
-      "items": [
-        "websocket.requestTimeout",
-        "websocket.pingInterval",
-        "websocket.reconnectInterval"
-      ]
+      "items": ["websocket.requestTimeout", "websocket.pingInterval", "websocket.reconnectInterval"]
     }
   ]
 }

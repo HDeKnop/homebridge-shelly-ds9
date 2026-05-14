@@ -1,8 +1,4 @@
-import {
-  CharacteristicValue as ShelliesCharacteristicValue,
-  Pm1,
-  Pm1AenergyStatus,
-} from 'shellies-ds9';
+import { CharacteristicValue as ShelliesCharacteristicValue, Pm1, Pm1AenergyStatus } from 'shellies-ds9';
 
 import { Ability, ServiceClass } from './base.js';
 
@@ -79,34 +75,22 @@ export class Pm1Ability extends Ability {
    * Handles changes to the `apower` property.
    */
   protected apowerChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.updateCharacteristic(
-      this.customCharacteristics.CurrentConsumption,
-      value as number,
-    );
-    this.service.updateCharacteristic(
-      this.Characteristic.On,
-      typeof value === 'number' && value >= 1,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.CurrentConsumption, value as number);
+    this.service.updateCharacteristic(this.Characteristic.On, typeof value === 'number' && value >= 1);
   }
 
   /**
    * Handles changes to the `voltage` property.
    */
   protected voltageChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.updateCharacteristic(
-      this.customCharacteristics.Voltage,
-      value as number,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.Voltage, value as number);
   }
 
   /**
    * Handles changes to the `current` property.
    */
   protected currentChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.updateCharacteristic(
-      this.customCharacteristics.ElectricCurrent,
-      value as number,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.ElectricCurrent, value as number);
   }
 
   /**
@@ -115,9 +99,6 @@ export class Pm1Ability extends Ability {
   protected aenergyChangeHandler(value: ShelliesCharacteristicValue) {
     const attr = value as unknown as Pm1AenergyStatus;
 
-    this.service.updateCharacteristic(
-      this.customCharacteristics.TotalConsumption,
-      attr.total / 1000,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.TotalConsumption, attr.total / 1000);
   }
 }

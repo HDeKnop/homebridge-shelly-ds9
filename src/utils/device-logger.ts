@@ -12,7 +12,11 @@ export class DeviceLogger {
    * @param deviceName - A user-friendly name of the device.
    * @param logger - The logging device to write to.
    */
-  constructor(readonly device: Device, deviceName: string | undefined, protected readonly logger: Logger) {
+  constructor(
+    readonly device: Device,
+    deviceName: string | undefined,
+    protected readonly logger: Logger
+  ) {
     this.prefix = `[${deviceName || device.id}] `;
   }
 
@@ -33,10 +37,6 @@ export class DeviceLogger {
   }
 
   log(level: LogLevel, message: string, ...parameters: unknown[]) {
-    this.logger.log(
-      level,
-      this.prefix + message,
-      ...parameters,
-    );
+    this.logger.log(level, this.prefix + message, ...parameters);
   }
 }

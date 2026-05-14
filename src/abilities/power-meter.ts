@@ -1,24 +1,16 @@
-import {
-  CharacteristicValue as ShelliesCharacteristicValue,
-  Cover,
-  Switch,
-  SwitchEnergyCounterAttributes,
-} from 'shellies-ds9';
+import { CharacteristicValue as ShelliesCharacteristicValue, Cover, Switch, SwitchEnergyCounterAttributes } from 'shellies-ds9';
 
 import { Ability, ServiceClass } from './base.js';
 
 /**
-* This ability sets up a custom service that reports power meter readings.
+ * This ability sets up a custom service that reports power meter readings.
  */
 export class PowerMeterAbility extends Ability {
   /**
    * @param component - The switch or cover component to get readings from.
    */
   constructor(readonly component: Switch | Cover) {
-    super(
-      `Power Meter ${component.id + 1}`,
-      `power-meter-${component.id}`,
-    );
+    super(`Power Meter ${component.id + 1}`, `power-meter-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -38,19 +30,13 @@ export class PowerMeterAbility extends Ability {
     this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
 
     // setup Current Consumption
-    s.setCharacteristic(
-      cc.CurrentConsumption,
-      c.apower ?? 0,
-    );
+    s.setCharacteristic(cc.CurrentConsumption, c.apower ?? 0);
 
     c.on('change:apower', this.apowerChangeHandler, this);
 
     // setup Voltage
     if (c.voltage !== undefined) {
-      s.setCharacteristic(
-        cc.Voltage,
-        c.voltage,
-      );
+      s.setCharacteristic(cc.Voltage, c.voltage);
 
       c.on('change:voltage', this.voltageChangeHandler, this);
     } else {
@@ -59,10 +45,7 @@ export class PowerMeterAbility extends Ability {
 
     // setup Electric Current
     if (c.current !== undefined) {
-      s.setCharacteristic(
-        cc.ElectricCurrent,
-        c.current,
-      );
+      s.setCharacteristic(cc.ElectricCurrent, c.current);
 
       c.on('change:current', this.currentChangeHandler, this);
     } else {
@@ -71,10 +54,7 @@ export class PowerMeterAbility extends Ability {
 
     // setup Total Consumption
     if (c.aenergy !== undefined) {
-      s.setCharacteristic(
-        cc.TotalConsumption,
-        c.aenergy.total / 1000,
-      );
+      s.setCharacteristic(cc.TotalConsumption, c.aenergy.total / 1000);
 
       c.on('change:aenergy', this.aenergyChangeHandler, this);
     } else {
@@ -99,41 +79,29 @@ export class PowerMeterAbility extends Ability {
      * For the use case of this plugin, knowing the negative voltage is not necessary, so we ensure that the value is never negative.
      */
     const positiveValue = Math.max(0, value as number);
-    this.service.updateCharacteristic(
-      this.customCharacteristics.CurrentConsumption,
-      positiveValue,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.CurrentConsumption, positiveValue);
   }
 
   /**
    * Handles changes to the `voltage` property.
    */
   protected voltageChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.updateCharacteristic(
-      this.customCharacteristics.Voltage,
-      value as number,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.Voltage, value as number);
   }
 
   /**
    * Handles changes to the `current` property.
    */
   protected currentChangeHandler(value: ShelliesCharacteristicValue) {
-    this.service.updateCharacteristic(
-      this.customCharacteristics.ElectricCurrent,
-      value as number,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.ElectricCurrent, value as number);
   }
 
   /**
    * Handles changes to the `aenergy` property.
    */
   protected aenergyChangeHandler(value: ShelliesCharacteristicValue) {
-    const attr = (value as unknown) as SwitchEnergyCounterAttributes;
+    const attr = value as unknown as SwitchEnergyCounterAttributes;
 
-    this.service.updateCharacteristic(
-      this.customCharacteristics.TotalConsumption,
-      attr.total / 1000,
-    );
+    this.service.updateCharacteristic(this.customCharacteristics.TotalConsumption, attr.total / 1000);
   }
 }

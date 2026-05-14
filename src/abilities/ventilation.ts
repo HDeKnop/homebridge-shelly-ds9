@@ -12,10 +12,7 @@ export class VentilationAbility extends Ability {
    * @param component - The light component to control.
    */
   constructor(readonly component: Light) {
-    super(
-      `Ventilation ${component.id + 1}`,
-      `light-${component.id}`,
-    );
+    super(`Ventilation ${component.id + 1}`, `light-${component.id}`);
   }
 
   protected get serviceClass(): ServiceClass {
@@ -23,18 +20,16 @@ export class VentilationAbility extends Ability {
   }
 
   protected initialize() {
-    const initialActive = this.component.output
-      ? this.Characteristic.Active.ACTIVE
-      : this.Characteristic.Active.INACTIVE;
+    const initialActive = this.component.output ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE;
     const initialSpeed = typeof this.component.brightness === 'number' ? this.component.brightness : 0;
 
     this.service.setCharacteristic(this.Characteristic.Active, initialActive);
     this.service.setCharacteristic(this.Characteristic.RotationSpeed, initialSpeed);
 
-    this.service.getCharacteristic(this.Characteristic.Active)
-      .onSet(this.onActiveSetHandler.bind(this));
+    this.service.getCharacteristic(this.Characteristic.Active).onSet(this.onActiveSetHandler.bind(this));
 
-    this.service.getCharacteristic(this.Characteristic.RotationSpeed)
+    this.service
+      .getCharacteristic(this.Characteristic.RotationSpeed)
       .setProps({ minValue: 0, maxValue: 100, minStep: 1 })
       .onSet(this.onRotationSpeedSetHandler.bind(this));
 
@@ -60,10 +55,7 @@ export class VentilationAbility extends Ability {
     try {
       await this.component.set(isActive);
     } catch (e) {
-      this.log.error(
-        'Failed to set ventilation state:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set ventilation state:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
   }
@@ -85,10 +77,7 @@ export class VentilationAbility extends Ability {
         await this.component.set(true, speed);
       }
     } catch (e) {
-      this.log.error(
-        'Failed to set ventilation speed:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set ventilation speed:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     }
   }
@@ -100,7 +89,8 @@ export class VentilationAbility extends Ability {
     const isActive = value === true || value === 1;
     this.log.info(`Ventilation Status(${this.component.id}): ${isActive ? 'on' : 'off'}`);
 
-    this.service.getCharacteristic(this.Characteristic.Active)
+    this.service
+      .getCharacteristic(this.Characteristic.Active)
       .updateValue(isActive ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE);
   }
 
@@ -111,11 +101,11 @@ export class VentilationAbility extends Ability {
     const speed = typeof value === 'number' ? value : 0;
     this.log.info(`Ventilation Speed(${this.component.id}): ${speed}`);
 
-    this.service.getCharacteristic(this.Characteristic.RotationSpeed)
-      .updateValue(speed);
+    this.service.getCharacteristic(this.Characteristic.RotationSpeed).updateValue(speed);
 
     const active = speed > 0 || this.component.output;
-    this.service.getCharacteristic(this.Characteristic.Active)
+    this.service
+      .getCharacteristic(this.Characteristic.Active)
       .updateValue(active ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE);
   }
 }

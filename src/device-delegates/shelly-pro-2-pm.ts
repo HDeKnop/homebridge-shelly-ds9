@@ -1,8 +1,4 @@
-import {
-  ShellyPro2Pm,
-  ShellyPro2PmRev1,
-  ShellyPro2PmRev2,
-} from 'shellies-ds9';
+import { ShellyPro2Pm, ShellyPro2PmRev1, ShellyPro2PmRev2 } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base.js';
 
@@ -14,7 +10,7 @@ export class ShellyPro2PmDelegate extends DeviceDelegate {
     const d = this.device as ShellyPro2Pm;
     const isCover = d.profile === 'cover';
 
-    if(isCover){
+    if (isCover) {
       this.addCover(d.cover0, { active: isCover });
     } else {
       this.addSwitch(d.switch0, { active: !isCover });
@@ -23,9 +19,4 @@ export class ShellyPro2PmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPro2PmDelegate,
-  ShellyPro2Pm,
-  ShellyPro2PmRev1,
-  ShellyPro2PmRev2,
-);
+DeviceDelegate.registerDelegate(ShellyPro2PmDelegate, ShellyPro2Pm, ShellyPro2PmRev1, ShellyPro2PmRev2);

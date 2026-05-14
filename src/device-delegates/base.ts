@@ -121,7 +121,11 @@ export abstract class DeviceDelegate {
    * @param options - Configuration options for the device.
    * @param platform - A reference to the homebridge platform.
    */
-  constructor(readonly device: Device, readonly options: DeviceOptions, readonly platform: ShellyPlatform) {
+  constructor(
+    readonly device: Device,
+    readonly options: DeviceOptions,
+    readonly platform: ShellyPlatform
+  ) {
     this.log = new DeviceLogger(device, options.name, platform.log);
     this.log.info('Device added');
 
@@ -195,7 +199,7 @@ export abstract class DeviceDelegate {
       this.platform,
       this.log,
       new AccessoryInformationAbility(this.device),
-      ...abilities,
+      ...abilities
     );
 
     // store the accessory
@@ -259,7 +263,7 @@ export abstract class DeviceDelegate {
       new CoverAbility(cover, 'door').setActive(isDoor),
       new CoverAbility(cover, 'windowCovering').setActive(isWindowCovering),
       new CoverAbility(cover, 'window').setActive(!isDoor && !isWindowCovering),
-      new PowerMeterAbility(cover),
+      new PowerMeterAbility(cover)
     ).setActive(coverOpts.exclude !== true && o.active !== false);
   }
 
@@ -282,11 +286,7 @@ export abstract class DeviceDelegate {
     const friendly = light.config?.name;
     const accessory = friendly
       ? this.createAccessoryWithFullName(id, friendly, ability)
-      : this.createAccessory(
-        id,
-        o.single === true ? null : `${isVentilation ? 'Ventilation' : 'Light'} ${light.id + 1}`,
-        ability,
-      );
+      : this.createAccessory(id, o.single === true ? null : `${isVentilation ? 'Ventilation' : 'Light'} ${light.id + 1}`, ability);
 
     return accessory.setActive(lightOpts.exclude !== true && o.active !== false);
   }

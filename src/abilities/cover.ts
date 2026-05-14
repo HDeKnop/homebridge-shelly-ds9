@@ -26,7 +26,7 @@ export class CoverAbility extends Ability {
    */
   constructor(
     readonly component: Cover,
-    readonly type: 'door' | 'window' | 'windowCovering' = 'window',
+    readonly type: 'door' | 'window' | 'windowCovering' = 'window'
   ) {
     super(`${names[type]} ${component.id + 1}`, `${type}-${component.id}`);
   }
@@ -90,14 +90,8 @@ export class CoverAbility extends Ability {
     // set the initial values
     this.service
       .setCharacteristic(this.Characteristic.PositionState, this.positionState)
-      .setCharacteristic(
-        this.Characteristic.CurrentPosition,
-        this.currentPosition,
-      )
-      .setCharacteristic(
-        this.Characteristic.TargetPosition,
-        this.targetPosition,
-      );
+      .setCharacteristic(this.Characteristic.CurrentPosition, this.currentPosition)
+      .setCharacteristic(this.Characteristic.TargetPosition, this.targetPosition);
 
     // listen for commands from HomeKit
     this.service
@@ -106,13 +100,9 @@ export class CoverAbility extends Ability {
       .onGet(this.targetPositionGetHandler.bind(this));
 
     // add onGet handlers for state retrieval
-    this.service
-      .getCharacteristic(this.Characteristic.PositionState)
-      .onGet(this.positionStateGetHandler.bind(this));
+    this.service.getCharacteristic(this.Characteristic.PositionState).onGet(this.positionStateGetHandler.bind(this));
 
-    this.service
-      .getCharacteristic(this.Characteristic.CurrentPosition)
-      .onGet(this.currentPositionGetHandler.bind(this));
+    this.service.getCharacteristic(this.Characteristic.CurrentPosition).onGet(this.currentPositionGetHandler.bind(this));
 
     // listen for updates from the device
     this.component
@@ -152,10 +142,7 @@ export class CoverAbility extends Ability {
     // Only skip when the cover is already AT the requested position.
     // Comparing only against target_pos drops commands when a physical switch
     // moved the cover (current_pos changed) without updating target_pos.
-    if (
-      value === this.component.target_pos &&
-      value === this.component.current_pos
-    ) {
+    if (value === this.component.target_pos && value === this.component.current_pos) {
       return;
     }
 
@@ -174,10 +161,7 @@ export class CoverAbility extends Ability {
     try {
       await this.component.goToPosition(value as number);
     } catch (e) {
-      this.log.error(
-        'Failed to set target position:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to set target position:', e instanceof Error ? e.message : e);
       throw this.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE;
     } finally {
       this._pendingPosition = null;
@@ -213,13 +197,10 @@ export class CoverAbility extends Ability {
       return;
     }
 
-    this.log.debug(
-      `${this.component.id} state changed to ${this.positionState}`,
-      {
-        target: this.targetPosition,
-        current: this.currentPosition,
-      },
-    );
+    this.log.debug(`${this.component.id} state changed to ${this.positionState}`, {
+      target: this.targetPosition,
+      current: this.currentPosition,
+    });
     this.updateStates();
   }
 
@@ -231,15 +212,9 @@ export class CoverAbility extends Ability {
    * gets confused and thinks the cover is in a different state than it actually is.
    */
   protected updateStates() {
-    this.service
-      .getCharacteristic(this.Characteristic.PositionState)
-      .updateValue(this.positionState);
-    this.service
-      .getCharacteristic(this.Characteristic.TargetPosition)
-      .updateValue(this.targetPosition);
-    this.service
-      .getCharacteristic(this.Characteristic.CurrentPosition)
-      .updateValue(this.currentPosition);
+    this.service.getCharacteristic(this.Characteristic.PositionState).updateValue(this.positionState);
+    this.service.getCharacteristic(this.Characteristic.TargetPosition).updateValue(this.targetPosition);
+    this.service.getCharacteristic(this.Characteristic.CurrentPosition).updateValue(this.currentPosition);
   }
 
   /**
@@ -250,13 +225,10 @@ export class CoverAbility extends Ability {
       return;
     }
 
-    this.log.debug(
-      `${this.component.id} position changed to ${this.currentPosition}`,
-      {
-        target: this.targetPosition,
-        state: this.positionState,
-      },
-    );
+    this.log.debug(`${this.component.id} position changed to ${this.currentPosition}`, {
+      target: this.targetPosition,
+      state: this.positionState,
+    });
     this.updateStates();
 
     // Shelly does not update the target position when it is triggered with a physical switch.
@@ -265,11 +237,8 @@ export class CoverAbility extends Ability {
     // (0 or 100) — Shelly sometimes skips the STOPPED notification at end-of-travel when
     // interrupted by rapid competing commands.
     const atLimit = this.currentPosition === 0 || this.currentPosition === 100;
-    if ((this.positionState === this.Characteristic.PositionState.STOPPED || atLimit) &&
-        this.targetPosition !== this.currentPosition) {
-      this.service
-        .getCharacteristic(this.Characteristic.TargetPosition)
-        .updateValue(this.currentPosition);
+    if ((this.positionState === this.Characteristic.PositionState.STOPPED || atLimit) && this.targetPosition !== this.currentPosition) {
+      this.service.getCharacteristic(this.Characteristic.TargetPosition).updateValue(this.currentPosition);
     }
   }
 
@@ -281,13 +250,10 @@ export class CoverAbility extends Ability {
       return;
     }
 
-    this.log.debug(
-      `${this.component.id} target position changed to ${this.targetPosition}`,
-      {
-        state: this.positionState,
-        current: this.currentPosition,
-      },
-    );
+    this.log.debug(`${this.component.id} target position changed to ${this.targetPosition}`, {
+      state: this.positionState,
+      current: this.currentPosition,
+    });
     this.updateStates();
   }
 }

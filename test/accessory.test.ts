@@ -4,11 +4,7 @@ import type { PlatformAccessory } from 'homebridge';
 import { Accessory } from '../src/accessory.js';
 import { Ability, ServiceClass } from '../src/abilities/base.js';
 import type { ShellyPlatform } from '../src/platform.js';
-import {
-  createFakePlatform,
-  FakePlatformAccessory,
-  type FakePlatform,
-} from './helpers/hap-stub.js';
+import { createFakePlatform, FakePlatformAccessory, type FakePlatform } from './helpers/hap-stub.js';
 import { createCapturingLogger } from './helpers/logger.js';
 import { DeviceLogger } from '../src/utils/device-logger.js';
 import { FakeDevice } from './helpers/shelly-stub.js';

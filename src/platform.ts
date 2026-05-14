@@ -1,21 +1,8 @@
 import { randomBytes } from 'crypto';
 
-import {
-  API,
-  DynamicPlatformPlugin,
-  Logger,
-  PlatformAccessory,
-  PlatformConfig,
-} from 'homebridge';
+import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
 
-import {
-  Device,
-  DeviceDiscoverer,
-  DeviceId,
-  DeviceIdentifiers,
-  MdnsDeviceDiscoverer,
-  Shellies,
-} from 'shellies-ds9';
+import { Device, DeviceDiscoverer, DeviceId, DeviceIdentifiers, MdnsDeviceDiscoverer, Shellies } from 'shellies-ds9';
 
 import { CustomCharacteristics, createCharacteristics } from './utils/characteristics.js';
 import { CustomServices, createServices } from './utils/services.js';
@@ -43,7 +30,10 @@ export class ConfigDeviceDiscoverer extends DeviceDiscoverer {
    * @param options - The platform configuration options.
    * @param emitInterval - The interval, in milliseconds, to wait between each emitted device.
    */
-  constructor(readonly options: PlatformOptions, readonly emitInterval = 20) {
+  constructor(
+    readonly options: PlatformOptions,
+    readonly emitInterval = 20
+  ) {
     super();
   }
 
@@ -66,7 +56,7 @@ export class ConfigDeviceDiscoverer extends DeviceDiscoverer {
    * Emits a device after the configured time interval has passed.
    */
   protected emitDevice(identifiers: DeviceIdentifiers): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         super.handleDiscoveredDevice(identifiers);
         resolve();
@@ -83,7 +73,10 @@ export class CacheDeviceDiscoverer extends DeviceDiscoverer {
    * @param deviceCache - The cached devices.
    * @param emitInterval - The interval, in milliseconds, to wait between each emitted device.
    */
-  constructor(readonly deviceCache: DeviceCache, readonly emitInterval = 20) {
+  constructor(
+    readonly deviceCache: DeviceCache,
+    readonly emitInterval = 20
+  ) {
     super();
   }
 
@@ -104,7 +97,7 @@ export class CacheDeviceDiscoverer extends DeviceDiscoverer {
    * Emits a device after the configured time interval has passed.
    */
   protected emitDevice(identifiers: DeviceIdentifiers): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         super.handleDiscoveredDevice(identifiers);
         resolve();
@@ -162,7 +155,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   constructor(
     readonly log: Logger,
     config: PlatformConfig,
-    readonly api: API,
+    readonly api: API
   ) {
     // get the platform options
     this.options = new PlatformOptions(config);
@@ -260,9 +253,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
    */
   protected async initialize() {
     this.log.debug(
-      this.accessories.size === 1
-        ? 'Loaded 1 accessory from cache'
-        : `Loaded ${this.accessories.size} accessories from cache`,
+      this.accessories.size === 1 ? 'Loaded 1 accessory from cache' : `Loaded ${this.accessories.size} accessories from cache`
     );
 
     await this.runConfigDeviceDiscoverer();
@@ -271,10 +262,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
     try {
       await this.deviceCache.load();
     } catch (e) {
-      this.log.error(
-        'Failed to load cached devices:',
-        e instanceof Error ? e.message : e,
-      );
+      this.log.error('Failed to load cached devices:', e instanceof Error ? e.message : e);
     }
 
     await this.runCacheDeviceDiscoverer();
@@ -415,11 +403,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
         this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, pas);
       }
 
-      this.log.debug(
-        pas.length === 1
-          ? '1 platform accessory unregistered'
-          : `${pas.length} platform accessories unregistered`,
-      );
+      this.log.debug(pas.length === 1 ? '1 platform accessory unregistered' : `${pas.length} platform accessories unregistered`);
     }
   }
 
@@ -433,7 +417,7 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
   /**
    * Handles 'error' events from the shellies-ds9 library.
    */
-  protected handleError(deviceId: DeviceId, error: Error) {
+  protected handleError(_deviceId: DeviceId, error: Error) {
     // print the error to the log
     this.log.error(error.message);
     this.log.debug(error.stack || '');

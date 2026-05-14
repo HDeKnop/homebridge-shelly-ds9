@@ -116,15 +116,15 @@ export interface DeviceOptions {
    * The index signature allows dynamic lookup in DeviceDelegate.getComponentOptions().
    */
   [key: string]: ComponentOptions | string | boolean | undefined;
-  [ 'switch:0' ]?: SwitchOptions;
-  [ 'switch:1' ]?: SwitchOptions;
-  [ 'switch:2' ]?: SwitchOptions;
-  [ 'switch:3' ]?: SwitchOptions;
-  [ 'cover:0' ]?: CoverOptions;
-  [ 'light:0' ]?: LightOptions;
-  [ 'light:1' ]?: LightOptions;
-  [ 'light:2' ]?: LightOptions;
-  [ 'light:3' ]?: LightOptions;
+  ['switch:0']?: SwitchOptions;
+  ['switch:1']?: SwitchOptions;
+  ['switch:2']?: SwitchOptions;
+  ['switch:3']?: SwitchOptions;
+  ['cover:0']?: CoverOptions;
+  ['light:0']?: LightOptions;
+  ['light:1']?: LightOptions;
+  ['light:2']?: LightOptions;
+  ['light:3']?: LightOptions;
 }
 
 const DEFAULT_DEVICE_OPTIONS: Readonly<DeviceOptions> = {

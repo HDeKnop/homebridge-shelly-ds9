@@ -17,11 +17,7 @@ describe('DeviceDelegate registry', () => {
   });
 
   it('registers a single delegate for multiple models', () => {
-    DeviceDelegate.registerDelegate(
-      TestDelegate1 as unknown as never,
-      { model: 'TEST-MODEL-B' },
-      { model: 'TEST-MODEL-C' },
-    );
+    DeviceDelegate.registerDelegate(TestDelegate1 as unknown as never, { model: 'TEST-MODEL-B' }, { model: 'TEST-MODEL-C' });
     expect(DeviceDelegate.getDelegate('TEST-MODEL-B')).toBe(TestDelegate1);
     expect(DeviceDelegate.getDelegate('TEST-MODEL-C')).toBe(TestDelegate1);
   });

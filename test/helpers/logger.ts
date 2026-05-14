@@ -12,9 +12,11 @@ export interface CapturingLogger extends Logger {
 
 export function createCapturingLogger(): CapturingLogger {
   const records: LogRecord[] = [];
-  const push = (level: LogRecord['level']) => (message: string, ...params: unknown[]) => {
-    records.push({ level, message, params });
-  };
+  const push =
+    (level: LogRecord['level']) =>
+    (message: string, ...params: unknown[]) => {
+      records.push({ level, message, params });
+    };
   const log: Partial<CapturingLogger> = {
     info: push('info'),
     warn: push('warn'),

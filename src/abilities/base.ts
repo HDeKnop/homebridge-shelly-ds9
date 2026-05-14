@@ -1,10 +1,4 @@
-import {
-  API,
-  Characteristic,
-  PlatformAccessory,
-  Service,
-  WithUUID,
-} from 'homebridge';
+import { API, Characteristic, PlatformAccessory, Service, WithUUID } from 'homebridge';
 
 import { CustomCharacteristics } from '../utils/characteristics.js';
 import { CustomServices } from '../utils/services.js';
@@ -126,7 +120,7 @@ export abstract class Ability {
    */
   constructor(
     protected readonly serviceName?: string,
-    protected readonly serviceSubtype?: string,
+    protected readonly serviceSubtype?: string
   ) {}
 
   /**
@@ -136,11 +130,7 @@ export abstract class Ability {
    * @param platform - A reference to the platform.
    * @param log - The logger to use.
    */
-  setup(
-    platformAccessory: PlatformAccessory,
-    platform: ShellyPlatform,
-    log: DeviceLogger,
-  ) {
+  setup(platformAccessory: PlatformAccessory, platform: ShellyPlatform, log: DeviceLogger) {
     this._platformAccessory = platformAccessory;
     this._platform = platform;
     this._log = log;
@@ -226,11 +216,7 @@ export abstract class Ability {
       const friendly = this.getFriendlyName() ?? this.serviceName;
       service =
         this.platformAccessory.getServiceById(this.serviceClass, this.serviceSubtype) ||
-        this.platformAccessory.addService(
-          this.serviceClass,
-          friendly,
-          this.serviceSubtype,
-        );
+        this.platformAccessory.addService(this.serviceClass, friendly, this.serviceSubtype);
       // keep displayName in sync — cached services may still hold a previous name
       if (service) {
         service.displayName = friendly;
@@ -267,10 +253,7 @@ export abstract class Ability {
    * only accepts an instance).
    * @param characteristic - The characteristic to remove.
    */
-  protected removeCharacteristic(
-    characteristic: WithUUID<new () => Characteristic> &
-      WithUUID<typeof Characteristic>,
-  ) {
+  protected removeCharacteristic(characteristic: WithUUID<new () => Characteristic> & WithUUID<typeof Characteristic>) {
     const s = this.service;
 
     // getCharacteristic() will add the characteristic if it doesn't exist, so we need to use testCharacteristic() to avoid

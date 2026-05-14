@@ -1,10 +1,4 @@
-import {
-  ShellyPlus1,
-  ShellyPlus1Ul,
-  ShellyPlus1V3,
-  ShellyPlus1Mini,
-  ShellyPlus1MiniV3,
-} from 'shellies-ds9';
+import { ShellyPlus1, ShellyPlus1Ul, ShellyPlus1V3, ShellyPlus1Mini, ShellyPlus1MiniV3 } from 'shellies-ds9';
 
 import { DeviceDelegate } from './base.js';
 
@@ -19,11 +13,4 @@ export class ShellyPlus1Delegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyPlus1Delegate,
-  ShellyPlus1,
-  ShellyPlus1Ul,
-  ShellyPlus1V3,
-  ShellyPlus1Mini,
-  ShellyPlus1MiniV3,
-);
+DeviceDelegate.registerDelegate(ShellyPlus1Delegate, ShellyPlus1, ShellyPlus1Ul, ShellyPlus1V3, ShellyPlus1Mini, ShellyPlus1MiniV3);

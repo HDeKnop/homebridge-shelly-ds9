@@ -70,7 +70,8 @@ export class Accessory {
     readonly name: string,
     readonly platform: ShellyPlatform,
     readonly log: DeviceLogger,
-    ...abilities: Ability[]) {
+    ...abilities: Ability[]
+  ) {
     this.uuid = platform.api.hap.uuid.generate(`${deviceId}-${id}`);
     this.abilities = abilities;
 
@@ -182,10 +183,7 @@ export class Accessory {
    */
   protected createPlatformAccessory(): PlatformAccessory {
     // create a new accessory
-    const pa = new this.platform.api.platformAccessory(
-      this.name,
-      this.uuid,
-    );
+    const pa = new this.platform.api.platformAccessory(this.name, this.uuid);
 
     // store info in the context
     pa.context.device = {

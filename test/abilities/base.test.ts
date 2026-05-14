@@ -29,7 +29,7 @@ describe('Ability.sanitizeName', () => {
   });
 
   it('preserves apostrophes', () => {
-    expect(sanitize('Herman\'s Room')).toBe('Herman\'s Room');
+    expect(sanitize("Herman's Room")).toBe("Herman's Room");
   });
 
   it('replaces non-allowed characters with spaces', () => {

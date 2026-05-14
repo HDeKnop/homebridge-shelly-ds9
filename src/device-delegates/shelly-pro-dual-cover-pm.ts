@@ -14,7 +14,4 @@ export class ShellyProDualCoverPmDelegate extends DeviceDelegate {
   }
 }
 
-DeviceDelegate.registerDelegate(
-  ShellyProDualCoverPmDelegate,
-  ShellyProDualCoverPm,
-);
+DeviceDelegate.registerDelegate(ShellyProDualCoverPmDelegate, ShellyProDualCoverPm);
