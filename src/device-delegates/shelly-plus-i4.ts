@@ -9,29 +9,26 @@ import { ReadonlySwitchAbility, ServiceLabelAbility, StatelessProgrammableSwitch
 export class ShellyPlusI4Delegate extends DeviceDelegate {
   protected setup() {
     const d = this.device as ShellyPlusI4;
-
-    // determine each input type
-    const input0IsButton = d.input0.config?.type === 'button';
-    const input1IsButton = d.input1.config?.type === 'button';
-    const input2IsButton = d.input2.config?.type === 'button';
-    const input3IsButton = d.input3.config?.type === 'button';
+    const inputs = [d.input0, d.input1, d.input2, d.input3] as const;
+    const isButton = inputs.map((i) => i.config?.type === 'button');
 
     // create an accessory for all button inputs
     this.createAccessory(
       'buttons',
       null,
-      new StatelessProgrammableSwitchAbility(d.input0).setActive(input0IsButton),
-      new StatelessProgrammableSwitchAbility(d.input1).setActive(input1IsButton),
-      new StatelessProgrammableSwitchAbility(d.input2).setActive(input2IsButton),
-      new StatelessProgrammableSwitchAbility(d.input3).setActive(input3IsButton),
+      ...inputs.map((input, i) => new StatelessProgrammableSwitchAbility(input).setActive(isButton[i])),
       new ServiceLabelAbility()
-    ).setActive(input0IsButton || input1IsButton || input2IsButton || input3IsButton);
+    ).setActive(isButton.some(Boolean));
 
-    // create accessories for all switch inputs
-    this.createAccessory('switch0', null, new ReadonlySwitchAbility(d.input0)).setActive(!input0IsButton);
-    this.createAccessory('switch1', null, new ReadonlySwitchAbility(d.input1)).setActive(!input1IsButton);
-    this.createAccessory('switch2', null, new ReadonlySwitchAbility(d.input2)).setActive(!input2IsButton);
-    this.createAccessory('switch3', null, new ReadonlySwitchAbility(d.input3)).setActive(!input3IsButton);
+    // create accessories for all switch inputs — use per-input friendly name when set
+    inputs.forEach((input, i) => {
+      const friendly = input.config?.name;
+      const ability = new ReadonlySwitchAbility(input);
+      const accessory = friendly
+        ? this.createAccessoryWithFullName(`switch${i}`, friendly, ability)
+        : this.createAccessory(`switch${i}`, null, ability);
+      accessory.setActive(!isButton[i]);
+    });
   }
 }
 

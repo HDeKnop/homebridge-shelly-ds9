@@ -15,7 +15,13 @@ export class LightAbility extends Ability {
     return this.Service.Lightbulb;
   }
 
+  protected getFriendlyName(): string {
+    return this.sanitizeName(this.component.config?.name ?? this.platformAccessory.displayName);
+  }
+
   protected initialize() {
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
+
     // set the initial value
     this.service.setCharacteristic(this.Characteristic.On, this.component.output);
 

@@ -19,7 +19,13 @@ export class VentilationAbility extends Ability {
     return this.Service.Fanv2;
   }
 
+  protected getFriendlyName(): string {
+    return this.sanitizeName(this.component.config?.name ?? this.platformAccessory.displayName);
+  }
+
   protected initialize() {
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
+
     const initialActive = this.component.output ? this.Characteristic.Active.ACTIVE : this.Characteristic.Active.INACTIVE;
     const initialSpeed = typeof this.component.brightness === 'number' ? this.component.brightness : 0;
 

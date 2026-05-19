@@ -10,8 +10,14 @@ import { Pm1Ability } from '../abilities/index.js';
 export class ShellyPlusPmDelegate extends DeviceDelegate {
   protected setup() {
     const d = this.device as ShellyPlusPmMini;
+    const friendly = d.pm1.config?.name;
+    const ability = new Pm1Ability(d.pm1);
 
-    this.createAccessory('switch', this.device.id, new Pm1Ability(d.pm1));
+    if (friendly) {
+      this.createAccessoryWithFullName('switch', friendly, ability);
+    } else {
+      this.createAccessory('switch', null, ability);
+    }
   }
 }
 

@@ -19,7 +19,13 @@ export class ReadonlySwitchAbility extends Ability {
     return this.Service.Switch;
   }
 
+  protected getFriendlyName(): string {
+    return this.sanitizeName(this.component.config?.name ?? this.platformAccessory.displayName);
+  }
+
   protected initialize() {
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
+
     this.service
       .getCharacteristic(this.Characteristic.On)
       // remove the write permissions

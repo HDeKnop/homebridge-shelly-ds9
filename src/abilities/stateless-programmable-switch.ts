@@ -20,7 +20,13 @@ export class StatelessProgrammableSwitchAbility extends Ability {
     return this.Service.StatelessProgrammableSwitch;
   }
 
+  protected getFriendlyName(): string {
+    return this.sanitizeName(this.component.config?.name ?? `Button ${this.component.id + 1}`);
+  }
+
   protected initialize() {
+    this.service.setCharacteristic(this.Characteristic.Name, this.getFriendlyName());
+
     // set the index number for this switch
     this.service.setCharacteristic(this.Characteristic.ServiceLabelIndex, this.component.id + 1);
 
