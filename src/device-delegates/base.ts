@@ -256,15 +256,19 @@ export abstract class DeviceDelegate {
     const isWindowCovering = type === 'windowcovering';
 
     const id = o.single === true ? 'cover' : `cover-${cover.id}`;
-
-    return this.createAccessory(
-      id,
-      'Cover',
+    const friendly = cover.config?.name;
+    const abilities = [
       new CoverAbility(cover, 'door').setActive(isDoor),
       new CoverAbility(cover, 'windowCovering').setActive(isWindowCovering),
       new CoverAbility(cover, 'window').setActive(!isDoor && !isWindowCovering),
-      new PowerMeterAbility(cover)
-    ).setActive(coverOpts.exclude !== true && o.active !== false);
+      new PowerMeterAbility(cover),
+    ];
+
+    const accessory = friendly
+      ? this.createAccessoryWithFullName(id, friendly, ...abilities)
+      : this.createAccessory(id, 'Cover', ...abilities);
+
+    return accessory.setActive(coverOpts.exclude !== true && o.active !== false);
   }
 
   /**
