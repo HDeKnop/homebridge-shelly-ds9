@@ -10,7 +10,7 @@ export class ShellyPlusI4Delegate extends DeviceDelegate {
   protected setup() {
     const d = this.device as ShellyPlusI4;
     const inputs = [d.input0, d.input1, d.input2, d.input3] as const;
-    const isButton = inputs.map((i) => i.config?.type === 'button');
+    const isButton = inputs.map(i => i.config?.type === 'button');
 
     // create an accessory for all button inputs
     this.createAccessory(
