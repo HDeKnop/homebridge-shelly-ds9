@@ -1,6 +1,6 @@
 {
   "name": "homebridge-shelly-ds9-dev",
-  "version": "1.5.9-hubris.15",
+  "version": "1.5.9-hubris.16",
   "description": "Homebridge plugin for the next generation of Shelly devices",
   "type": "module",
   "main": "dist/index.js",
