@@ -5,6 +5,13 @@ import { Ability, ServiceClass } from './base.js';
 
 export class OutletAbility extends Ability {
   /**
+   * Flag to track if the ability is fully initialized and active.
+   * Prevents refreshState() (called from handleConnect on reconnect) from
+   * accessing this.service before setup() has completed.
+   */
+  private _isInitialized = false;
+
+  /**
    * @param component - The switch component to control.
    */
   constructor(readonly component: Switch) {
@@ -32,13 +39,22 @@ export class OutletAbility extends Ability {
 
     // listen for updates from the device
     this.component.on('change:output', this.outputChangeHandler, this).on('change:apower', this.apowerChangeHandler, this);
+
+    // mark as initialized after all setup is complete
+    this._isInitialized = true;
   }
 
   detach() {
+    // mark as no longer initialized to prevent race with refreshState/event handlers
+    this._isInitialized = false;
+
     this.component.off('change:output', this.outputChangeHandler, this).off('change:apower', this.apowerChangeHandler, this);
   }
 
   refreshState() {
+    if (!this._isInitialized) {
+      return;
+    }
     this.service.getCharacteristic(this.Characteristic.On).updateValue(this.component.output);
     this.service
       .getCharacteristic(this.Characteristic.OutletInUse)

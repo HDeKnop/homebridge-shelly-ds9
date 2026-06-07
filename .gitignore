@@ -3,6 +3,12 @@ node_modules
 coverage
 .DS_Store
 
+# Local-only homelab docs/config — never publish (public repo).
+# Contain internal IPs, SSH workflows, device names.
+SYMLINK-MAINTENANCE.md
+CLAUDE.md
+.claude/settings.json
+
 # Legacy ESLint config files — replaced by flat config (eslint.config.js).
 # Pinned in .gitignore because iCloud sync from other machines occasionally
 # restores them.
